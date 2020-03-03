@@ -1,0 +1,8 @@
+.description{
+    grid-area: description;
+    background: beige;
+    opacity: .8;
+}
+.ml{
+    margin-left: 15px;
+}

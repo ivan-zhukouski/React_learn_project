@@ -1,0 +1,5 @@
+.main_header{
+    grid-area: header;
+    background-color: aqua;
+    opacity: .6;
+}

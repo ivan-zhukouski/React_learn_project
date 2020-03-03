@@ -1,0 +1,10 @@
+.nav_bar{
+    grid-area: nav;
+    background-color: bisque;
+    opacity: .8;
+    height: 100%;
+}
+.mt_ml{
+    margin-top: 15px;
+    margin-left: 15px;
+}

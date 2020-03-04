@@ -13,7 +13,8 @@ const MyPosts = () => {
                 </textarea>
                 <button>Add post</button>
             </div>
-            <Post/>
+            <Post message='Hi, How are you??' likeCount = '24' />
+            <Post message='Have you read my message???' likeCount = '15' />
         </div>
 
     )

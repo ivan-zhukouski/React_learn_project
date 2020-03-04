@@ -1,0 +1,23 @@
+.ava {
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+}
+.main_post_div {
+    display: flex;
+    justify-content: flex-start;
+}
+.post {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+.heart {
+    width: 20px;
+    height: 20px;
+}
+.like{
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}

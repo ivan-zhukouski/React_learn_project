@@ -26,10 +26,11 @@ body{
 .App_wrapper{
   display: grid;
   grid-template-areas:
-          'header header header'
-          'nav ava description';
+          'header header header header'
+          'nav ava description my_posts'
+          'none none none my_posts';
   grid-template-rows: 1fr;
-  grid-template-columns: 2fr 2fr 8fr;
+  grid-template-columns: 2fr 2fr 3fr 5fr;
   grid-gap: 10px;
 }
 

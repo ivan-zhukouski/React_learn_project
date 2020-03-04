@@ -1,0 +1,5 @@
+.my_posts {
+    grid-area: my_posts;
+    background-color: antiquewhite;
+    opacity: .8;
+}

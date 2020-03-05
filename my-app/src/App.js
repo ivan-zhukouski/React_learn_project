@@ -5,6 +5,7 @@ import NavBar from "./Components/Navbar/Navbar";
 import Avatar from "./Components/Avatar/Avatar";
 import Profile from "./Components/Profile/Profile";
 import MyPosts from "./Components/Posts/MyPosts/MyPosts";
+import Dialogs from "./Components/Dialogs/Dialogs"
 
 function App() {
     return (
@@ -12,8 +13,11 @@ function App() {
             <Header/>
             <NavBar/>
             <Avatar/>
-            <Profile/>
-            <MyPosts/>
+            <div className='app_wrapper_content'>
+                {/*<Profile/>
+                <MyPosts/>*/}
+                <Dialogs/>
+            </div>
         </div>
     );
 }

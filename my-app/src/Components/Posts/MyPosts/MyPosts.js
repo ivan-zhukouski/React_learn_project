@@ -4,7 +4,7 @@ import Post from "../Post.js"
 
 const MyPosts = () => {
     return (
-        <div className={style.my_posts}>
+        <div className={style.ml}>
             <div>
                 My posts here!
             </div>

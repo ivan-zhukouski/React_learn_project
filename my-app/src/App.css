@@ -27,10 +27,14 @@ body{
   display: grid;
   grid-template-areas:
           'header header header header'
-          'nav ava description my_posts'
-          'none none none my_posts';
+          'nav ava main_content main_content';
+
   grid-template-rows: 1fr;
   grid-template-columns: 2fr 2fr 3fr 5fr;
   grid-gap: 10px;
 }
-
+.app_wrapper_content{
+  grid-area: main_content;
+  background-color: bisque;
+  opacity: .8;
+}

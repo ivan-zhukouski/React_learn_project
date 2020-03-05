@@ -1,5 +1,5 @@
-.description{
-    grid-area: description;
+.content{
+    grid-area: content;
     background: beige;
     opacity: .8;
 }

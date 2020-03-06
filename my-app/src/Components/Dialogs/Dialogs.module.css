@@ -1,0 +1,14 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 3fr 9fr;
+}
+.dialog_items{
+    padding-left: 15px;
+}
+.dialog_items a{
+    text-decoration: none;
+    color: black;
+}
+.dialog_items div{
+    margin-top: 15px;
+}

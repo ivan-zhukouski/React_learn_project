@@ -3,8 +3,15 @@
     background-color: bisque;
     opacity: .8;
     height: 100%;
+    padding:0 15px 0 15px ;
 }
-.mt_ml{
+.link{
     margin-top: 15px;
-    margin-left: 15px;
+}
+.link a.active{
+    color: orangered;
+}
+.link a{
+    text-decoration: none;
+    color: black;
 }

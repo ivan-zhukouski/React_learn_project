@@ -26,16 +26,16 @@ body{
 .App_wrapper{
   display: grid;
   grid-template-areas:
-          'header header header header'
-          'nav ava main_content main_content'
-'none none main_content main_content';
+          'header header header'
+          'nav ava main_content'
+          'none none main_content';
 
   grid-template-rows: 1fr;
-  grid-template-columns: 2fr 2fr 3fr 5fr;
+  grid-template-columns: 2fr 2fr 8fr;
   grid-gap: 10px;
 }
 .app_wrapper_content{
   grid-area: main_content;
-  background-color: bisque;
+  background: beige;
   opacity: .8;
 }

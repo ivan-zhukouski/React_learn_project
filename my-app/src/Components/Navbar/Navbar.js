@@ -6,7 +6,7 @@ const NavBar = () => {
         <nav className={style.nav_bar}>
             <div className='d-flex flex-column'>
                 <div className={style.link}>
-                    <NavLink to='/profile' activeClassName={style.active} >Profile</NavLink>
+                    <NavLink exact to='/profile' activeClassName={style.active} >Profile</NavLink>
                 </div>
                 <div className={style.link}>
                     <NavLink to='/dialogs' activeClassName={style.active} >Massages</NavLink>

@@ -1,7 +1,8 @@
 .content{
     grid-area: content;
-    background: beige;
-    opacity: .8;
+    display: grid;
+    grid-template-areas: "prof_info posts";
+    grid-template-columns: 3fr 9fr;
 }
 .ml{
     margin-left: 15px;

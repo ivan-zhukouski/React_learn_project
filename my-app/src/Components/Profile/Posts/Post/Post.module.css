@@ -4,8 +4,10 @@
     border-radius: 30px;
 }
 .main_post_div {
+    padding: 15px;
     display: flex;
     justify-content: flex-start;
+    grid-area: posts;
 }
 .post {
     display: flex;

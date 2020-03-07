@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import Header from "./Components/Header/Header";
 import NavBar from "./Components/Navbar/Navbar";
-import Avatar from "./Components/Avatar/Avatar";
+import Avatar from "./Components/Profile/Avatar/Avatar";
 import Profile from "./Components/Profile/Profile";
 import Dialogs from "./Components/Dialogs/Dialogs";
 import Music from "./Components/Music/Music";

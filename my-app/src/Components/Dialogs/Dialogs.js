@@ -3,26 +3,22 @@ import style from "./Dialogs.module.css"
 import Message from "./Messages/Messages";
 import DialogItem from "./DialogItems/DialogItems";
 
-let dialogsData = [
-    {name: 'Ivan', id: 1,},
-    {name: 'Dimon', id: 2,},
-];
-const dialog = dialogsData.map(d => <DialogItem name={d.name} id={d.id}/>);
-
-let messageData = [
-    {message:'Yo, bro!!', id: 1},
-    {message:'How are you??', id: 2}
-];
-const message = messageData.map(m => <Message message={m.message} />);
-
-const Dialogs = () => {
+const Dialogs = (props) => {
+    const dialog = props.dialogsData.map(d => <DialogItem name={d.name} id={d.id}/>);
+    const messageFriend = props.messageData.map(m => <Message message={m.message} />);
+    const messageMe = props.messageData.map(m => <Message message={m.message} />);
     return(
         <div className={style.dialogs}>
             <div className={style.dialog_items}>
                 {dialog}
             </div>
-            <div >
-                {message}
+            <div className={style.messages_field}>
+                <div>
+                    {messageFriend}
+                </div>
+                <div className={style.low_message}>
+                    {messageMe}
+                </div>
             </div>
         </div>
     )

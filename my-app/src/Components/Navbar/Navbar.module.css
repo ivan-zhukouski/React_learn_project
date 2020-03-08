@@ -1,12 +1,8 @@
 .nav_bar{
     grid-area: nav;
-    background-color: bisque;
-    opacity: .8;
-    height: 100%;
-    padding:0 15px 0 15px ;
 }
 .link{
-    margin-top: 15px;
+    padding: 15px 15px 0 15px;
 }
 .link a.active{
     color: orangered;
@@ -14,4 +10,36 @@
 .link a{
     text-decoration: none;
     color: black;
+}
+.nav_links{
+    background-color: bisque;
+    opacity: .8;
+}
+.last_link{
+    padding-bottom: 15px;
+}
+.friend_item img{
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    margin: 0;
+}
+.friend_bar {
+    margin-top: 10px;
+    background-color: bisque;
+    opacity: .8;
+    padding: 15px;
+}
+.friends_container{
+    display: flex;
+    justify-content: space-around;
+    flex-flow: wrap;
+}
+h3{
+    text-align: center;
+}
+.friend_item{
+    display: flex;
+   flex-direction: column;
+    align-items: center;
 }

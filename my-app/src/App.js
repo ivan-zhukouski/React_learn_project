@@ -10,15 +10,16 @@ import {Route} from "react-router-dom";
 import News from "./Components/News/News";
 import Settings from "./Components/Settings/Settings";
 
-function App() {
+function App(props) {
     return (
         <div className='App_wrapper'>
             <Header/>
             <NavBar/>
             <Avatar/>
             <div className='app_wrapper_content'>
-                <Route path='/profile' component={Profile}/>
-                <Route path='/dialogs' component={Dialogs} />
+                <Route path='/profile' render={()=> <Profile postsData={props.store.profileData.postsData} />}/>
+                <Route path='/dialogs' render={()=> <Dialogs dialogsData={props.store.dialogData.dialogsData}
+                                                             messageData={props.store.dialogData.messageData} />} />
                 <Route path='/music' component={Music}/>
                 <Route path='/news' component={News}/>
                 <Route path='/settings' component={Settings}/>

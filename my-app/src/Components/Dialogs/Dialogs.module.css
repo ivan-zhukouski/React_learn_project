@@ -13,5 +13,26 @@
     margin-top: 15px;
 }
 .message {
+    padding: 10px;
+    border: 1px solid cadetblue;
+    border-radius: 10px;
     margin-top: 15px;
+}
+.dialog_item_container{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 15px ;
+}
+.dialog_item_friend{
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+.messages_field{
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+}
+.low_message{
+    margin-top: 40px;
 }

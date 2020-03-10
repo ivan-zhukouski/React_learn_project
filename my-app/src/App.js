@@ -14,7 +14,7 @@ function App(props) {
     return (
         <div className='App_wrapper'>
             <Header/>
-            <NavBar/>
+            <NavBar friendsData={props.store.sideBarData.friendsData}/>
             <Avatar/>
             <div className='app_wrapper_content'>
                 <Route path='/profile' render={()=> <Profile postsData={props.store.profileData.postsData} />}/>

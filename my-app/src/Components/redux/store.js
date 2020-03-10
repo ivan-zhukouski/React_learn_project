@@ -1,8 +1,8 @@
 const store = {
     profileData: {
         postsData: [
-            {post:'Hi, How are you?? Are kidding me??', likeCount: 24},
-            {post:'Have you read my message??', likeCount: 27},
+            {id:1, post:'Hi, How are you?? Are kidding me??', likeCount: 24 },
+            {id:2, post:'Have you read my message??', likeCount: 27},
         ],
     },
     dialogData: {
@@ -15,5 +15,22 @@ const store = {
             {message:'How are you??', id: 2}
         ],
     },
+    sideBarData: {
+        friendsData: [
+            {name: 'Artem', id: 1},
+            {name: 'Dima', id: 2},
+            {name: 'Alex', id: 3},
+            {name: 'Pasha', id: 4},
+        ]
+    }
+};
+
+export const addPost = (postMessage) => {
+    const newPost = {
+        id: 3,
+        post: postMessage,
+        likeCount: 0,
+    };
+    store.profileData.postsData.push(newPost)
 };
 export default store

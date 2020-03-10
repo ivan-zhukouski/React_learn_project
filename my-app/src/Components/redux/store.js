@@ -1,9 +1,12 @@
+import rerenderApplication from "../../render";
+
 const store = {
     profileData: {
         postsData: [
             {id:1, post:'Hi, How are you?? Are kidding me??', likeCount: 24 },
             {id:2, post:'Have you read my message??', likeCount: 27},
         ],
+        newPostText: '',
     },
     dialogData: {
         dialogsData: [
@@ -25,12 +28,18 @@ const store = {
     }
 };
 
-export const addPost = (postMessage) => {
+export const addPost = () => {
     const newPost = {
         id: 3,
-        post: postMessage,
+        post: store.profileData.newPostText,
         likeCount: 0,
     };
-    store.profileData.postsData.push(newPost)
+    store.profileData.postsData.push(newPost);
+    store.profileData.newPostText = '';
+    rerenderApplication(store);
+};
+export const updatePostText = (newText) => {
+    store.profileData.newPostText = newText;
+    rerenderApplication(store);
 };
 export default store

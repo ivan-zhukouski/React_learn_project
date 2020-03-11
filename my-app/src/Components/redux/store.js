@@ -1,6 +1,5 @@
-import rerenderApplication from "../../render";
-
-const store = {
+let rerenderApp = null;
+const state = {
     profileData: {
         postsData: [
             {id:1, post:'Hi, How are you?? Are kidding me??', likeCount: 24 },
@@ -25,21 +24,26 @@ const store = {
             {name: 'Alex', id: 3},
             {name: 'Pasha', id: 4},
         ]
-    }
+    },
 };
 
 export const addPost = () => {
     const newPost = {
         id: 3,
-        post: store.profileData.newPostText,
+        post: state.profileData.newPostText,
         likeCount: 0,
     };
-    store.profileData.postsData.push(newPost);
-    store.profileData.newPostText = '';
-    rerenderApplication(store);
+    state.profileData.postsData.push(newPost);
+    state.profileData.newPostText = '';
+    rerenderApp(state);
 };
 export const updatePostText = (newText) => {
-    store.profileData.newPostText = newText;
-    rerenderApplication(store);
+    state.profileData.newPostText = newText;
+    rerenderApp(state);
 };
-export default store
+
+export const subscribe = (observer) => {
+    rerenderApp = observer;
+};
+window.state = state;
+export default state

@@ -13,16 +13,16 @@ import Settings from "./Components/Settings/Settings";
 function App(props) {
     return (
         <div className='App_wrapper'>
-            <Header/>
-            <NavBar friendsData={props.store.sideBarData.friendsData}/>
+            <Header />
+            <NavBar friendsData={props.state.sideBarData.friendsData}/>
             <Avatar/>
             <div className='app_wrapper_content'>
-                <Route path='/profile' render={()=> <Profile postsData={props.store.profileData.postsData}
+                <Route path='/profile' render={()=> <Profile postsData={props.state.profileData.postsData}
                                                              addPost={props.addPost}
                                                              updatePostText={props.updatePostText}
-                                                             newPostText={props.store.profileData.newPostText} />} />
-                <Route path='/dialogs' render={()=> <Dialogs dialogsData={props.store.dialogData.dialogsData}
-                                                             messageData={props.store.dialogData.messageData} />} />
+                                                             newPostText={props.state.profileData.newPostText} />} />
+                <Route path='/dialogs' render={()=> <Dialogs dialogsData={props.state.dialogData.dialogsData}
+                                                             messageData={props.state.dialogData.messageData} />} />
                 <Route path='/music' component={Music}/>
                 <Route path='/news' component={News}/>
                 <Route path='/settings' component={Settings}/>

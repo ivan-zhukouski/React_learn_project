@@ -14,15 +14,15 @@ function App(props) {
     return (
         <div className='App_wrapper'>
             <Header />
-            <NavBar friendsData={props.state.sideBarData.friendsData}/>
+            <NavBar friendsData={props.store.getState().sideBarData.friendsData}/>
             <Avatar/>
             <div className='app_wrapper_content'>
-                <Route path='/profile' render={()=> <Profile postsData={props.state.profileData.postsData}
+                <Route path='/profile' render={()=> <Profile postsData={props.store.getState().profileData.postsData}
                                                              addPost={props.addPost}
                                                              updatePostText={props.updatePostText}
-                                                             newPostText={props.state.profileData.newPostText} />} />
-                <Route path='/dialogs' render={()=> <Dialogs dialogsData={props.state.dialogData.dialogsData}
-                                                             messageData={props.state.dialogData.messageData} />} />
+                                                             newPostText={props.store.getState().profileData.newPostText} />} />
+                <Route path='/dialogs' render={()=> <Dialogs dialogsData={props.store.getState().dialogData.dialogsData}
+                                                             messageData={props.store.getState().messageData} />} />
                 <Route path='/music' component={Music}/>
                 <Route path='/news' component={News}/>
                 <Route path='/settings' component={Settings}/>
@@ -30,5 +30,4 @@ function App(props) {
         </div>
     );
 }
-
 export default App;

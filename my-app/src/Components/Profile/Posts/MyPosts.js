@@ -12,6 +12,7 @@ const MyPosts = (props) => {
         let text = newPostRef.current.value;
         props.updatePostText(text);
     };
+
     return (
         <div className={style.myPost}>
             <div>

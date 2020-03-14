@@ -9,8 +9,8 @@ import React from "react";
 const rerenderApplication = () => {
     const Application = <BrowserRouter>
         <App store={store}
-             addPost={store.addPost.bind(store)}
-             updatePostText={store.updatePostText.bind(store)} />
+             dispatch={store.dispatch.bind(store)}
+        />
     </BrowserRouter>;
     ReactDOM.render(Application, document.getElementById('root'));
 };

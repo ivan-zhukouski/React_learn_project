@@ -15,7 +15,8 @@ export const store = {
             ],
             messageData:[
                 {message:'Yo, bro!!', id: 1},
-                {message:'How are you??', id: 2}
+                {message:'How are you??', id: 2},
+                {message:'How are you??', id: 3},
             ],
         },
         sideBarData: {
@@ -27,30 +28,31 @@ export const store = {
             ]
         },
     },
-    rerender(){
+    _rerender(){
         console.log('hi')
+    },
+    subscribe(observer){
+        this._rerender = observer
     },
     getState() {
         return this._state;
     },
-    addPost(){
-        const newPost = {
-            id:3,
-            post: this._state.profileData.newPostText,
-            likeCount: 0,
-        };
-        this._state.profileData.postsData.push(newPost);
-        this._state.profileData.newPostText = '';
-        this.rerender()
-
-    },
-    updatePostText(newText){
-        this._state.profileData.newPostText = newText;
-        this.rerender()
-    },
-    subscribe(observer){
-        this.rerender = observer
-    },
+    
+    dispatch(action){
+        if(action.type === 'ADD_NEW_POST'){
+            const newPost = {
+                id:3,
+                post: this._state.profileData.newPostText,
+                likeCount: 0,
+            };
+            this._state.profileData.postsData.push(newPost);
+            this._state.profileData.newPostText = '';
+            this._rerender()
+        } else if(action.type === 'UPDATE_POST_TEXT'){
+            this._state.profileData.newPostText = action.newText;
+            this._rerender()
+        }
+    }
 };
 
 window.store = store;

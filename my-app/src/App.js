@@ -18,11 +18,10 @@ function App(props) {
             <Avatar/>
             <div className='app_wrapper_content'>
                 <Route path='/profile' render={()=> <Profile postsData={props.store.getState().profileData.postsData}
-                                                             addPost={props.addPost}
-                                                             updatePostText={props.updatePostText}
+                                                             dispatch={props.dispatch}
                                                              newPostText={props.store.getState().profileData.newPostText} />} />
                 <Route path='/dialogs' render={()=> <Dialogs dialogsData={props.store.getState().dialogData.dialogsData}
-                                                             messageData={props.store.getState().messageData} />} />
+                                                             messageData={props.store.getState().dialogData.messageData} />} />
                 <Route path='/music' component={Music}/>
                 <Route path='/news' component={News}/>
                 <Route path='/settings' component={Settings}/>

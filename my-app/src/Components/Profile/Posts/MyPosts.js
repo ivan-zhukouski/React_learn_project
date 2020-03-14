@@ -6,11 +6,12 @@ const MyPosts = (props) => {
     const post = props.postsData.map( p => <Post message={p.post} likeCount = {p.likeCount} /> );
     const newPostRef = createRef();
     const addNewPost = () => {
-        props.addPost();
+        props.dispatch({type:'ADD_NEW_POST'});
     };
     const onChangePost = () => {
         let text = newPostRef.current.value;
-        props.updatePostText(text);
+        const action = {type: 'UPDATE_POST_TEXT', newText: text};
+        props.dispatch(action);
     };
 
     return (

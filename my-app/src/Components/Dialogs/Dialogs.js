@@ -1,12 +1,22 @@
-import React from "react";
+import React, {createRef} from "react";
 import style from "./Dialogs.module.css"
 import Message from "./Messages/Messages";
 import DialogItem from "./DialogItems/DialogItems";
+import {addNewDialogTextActionCreater, updateNewDialogTextActionCreater} from "../redux/store";
 
 const Dialogs = (props) => {
-    const dialog = props.dialogsData.map(d => <DialogItem name={d.name} id={d.id}/>);
-    const messageFriend = props.messageData.map(m => <Message message={m.message} />);
-    const messageMe = props.messageData.map(m => <Message message={m.message} />);
+    const dialog = props.dialogsData.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>);
+    const messageFriend = props.messageData.map(m => <Message key={m.id} message={m.message} />);
+    const messageMe = props.messageData.map(m => <Message key={m.id} message={m.message} />);
+
+    const dialogRef = createRef();
+    const addDialogText = ()=>{
+        props.dispatch(addNewDialogTextActionCreater())
+    };
+    const updateDialogText = ()=>{
+        const newDialogText = dialogRef.current.value;
+        props.dispatch(updateNewDialogTextActionCreater(newDialogText))
+    };
     return(
         <div className={style.dialogs}>
             <div className={style.dialog_items}>
@@ -20,11 +30,9 @@ const Dialogs = (props) => {
                     {messageMe}
                 </div>
             </div>
-            <textarea>
-
-            </textarea>
+            <textarea onChange={updateDialogText} ref={dialogRef} value={props.dialogData.newDialogText}/>
             <div>
-                <button>add message</button>
+                <button onClick={addDialogText}>add message</button>
             </div>
         </div>
     )

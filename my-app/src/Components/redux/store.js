@@ -1,3 +1,22 @@
+const ADD_NEW_POST = 'ADD_NEW_POST';
+const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
+const ADD_NEW_DIALOG_TEXT = 'ADD_NEW_DIALOG_TEXT';
+const UPDATE_NEW_DIALOG_TEXT = 'UPDATE_NEW_DIALOG_TEXT';
+
+export const addPostActionCreater = ()=> ( {
+    type: ADD_NEW_POST,
+});
+export const updatePostTextActionCreater = (newText) => ({
+    type: UPDATE_POST_TEXT, newText: newText,
+});
+export const addNewDialogTextActionCreater = () => ({
+    type: ADD_NEW_DIALOG_TEXT,
+});
+export const updateNewDialogTextActionCreater = (newDialogText)=> ({
+    type:UPDATE_NEW_DIALOG_TEXT, newDialogText: newDialogText
+});
+
+
 
 export const store = {
     _state: {
@@ -18,6 +37,7 @@ export const store = {
                 {message:'How are you??', id: 2},
                 {message:'How are you??', id: 3},
             ],
+            newDialogText: '',
         },
         sideBarData: {
             friendsData: [
@@ -37,9 +57,9 @@ export const store = {
     getState() {
         return this._state;
     },
-    
+
     dispatch(action){
-        if(action.type === 'ADD_NEW_POST'){
+        if(action.type === ADD_NEW_POST){
             const newPost = {
                 id:3,
                 post: this._state.profileData.newPostText,
@@ -48,8 +68,19 @@ export const store = {
             this._state.profileData.postsData.push(newPost);
             this._state.profileData.newPostText = '';
             this._rerender()
-        } else if(action.type === 'UPDATE_POST_TEXT'){
+        } else if(action.type === UPDATE_POST_TEXT){
             this._state.profileData.newPostText = action.newText;
+            this._rerender()
+        } else if(action.type === ADD_NEW_DIALOG_TEXT){
+            const newDialogText = {
+                id:4,
+                message: this._state.dialogData.newDialogText,
+            };
+            this._state.dialogData.messageData.push(newDialogText);
+            this._state.dialogData.newDialogText = '';
+            this._rerender()
+        } else if(action.type === UPDATE_NEW_DIALOG_TEXT){
+            this._state.dialogData.newDialogText = action.newDialogText;
             this._rerender()
         }
     }

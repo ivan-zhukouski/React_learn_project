@@ -21,7 +21,9 @@ function App(props) {
                                                              dispatch={props.dispatch}
                                                              newPostText={props.store.getState().profileData.newPostText} />} />
                 <Route path='/dialogs' render={()=> <Dialogs dialogsData={props.store.getState().dialogData.dialogsData}
-                                                             messageData={props.store.getState().dialogData.messageData} />} />
+                                                             messageData={props.store.getState().dialogData.messageData}
+                                                             dialogData={props.store.getState().dialogData}
+                                                             dispatch={props.dispatch} />} />
                 <Route path='/music' component={Music}/>
                 <Route path='/news' component={News}/>
                 <Route path='/settings' component={Settings}/>

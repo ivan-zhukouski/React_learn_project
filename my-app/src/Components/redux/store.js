@@ -1,28 +1,12 @@
-const ADD_NEW_POST = 'ADD_NEW_POST';
-const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
-const ADD_NEW_DIALOG_TEXT = 'ADD_NEW_DIALOG_TEXT';
-const UPDATE_NEW_DIALOG_TEXT = 'UPDATE_NEW_DIALOG_TEXT';
-
-export const addPostActionCreater = ()=> ( {
-    type: ADD_NEW_POST,
-});
-export const updatePostTextActionCreater = (newText) => ({
-    type: UPDATE_POST_TEXT, newText: newText,
-});
-export const addNewDialogTextActionCreater = () => ({
-    type: ADD_NEW_DIALOG_TEXT,
-});
-export const updateNewDialogTextActionCreater = (newDialogText)=> ({
-    type:UPDATE_NEW_DIALOG_TEXT, newDialogText: newDialogText
-});
-
+import profileReducer from "./reducers/profile-reducer.js";
+import dialogsReducer from "./reducers/dialogs-reducer";
 
 
 export const store = {
     _state: {
         profileData: {
             postsData: [
-                {id:1, post:'Hi, How are you?? Are kidding me??', likeCount: 24 },
+                {id:1, post:'Hi, How are you?? Are you kidding me??aha', likeCount: 24 },
                 {id:2, post:'Have you read my message??', likeCount: 27},
             ],
             newPostText: '',
@@ -39,7 +23,7 @@ export const store = {
             ],
             newDialogText: '',
         },
-        sideBarData: {
+        sidebarData: {
             friendsData: [
                 {name: 'Artem', id: 1},
                 {name: 'Dima', id: 2},
@@ -59,30 +43,9 @@ export const store = {
     },
 
     dispatch(action){
-        if(action.type === ADD_NEW_POST){
-            const newPost = {
-                id:3,
-                post: this._state.profileData.newPostText,
-                likeCount: 0,
-            };
-            this._state.profileData.postsData.push(newPost);
-            this._state.profileData.newPostText = '';
-            this._rerender()
-        } else if(action.type === UPDATE_POST_TEXT){
-            this._state.profileData.newPostText = action.newText;
-            this._rerender()
-        } else if(action.type === ADD_NEW_DIALOG_TEXT){
-            const newDialogText = {
-                id:4,
-                message: this._state.dialogData.newDialogText,
-            };
-            this._state.dialogData.messageData.push(newDialogText);
-            this._state.dialogData.newDialogText = '';
-            this._rerender()
-        } else if(action.type === UPDATE_NEW_DIALOG_TEXT){
-            this._state.dialogData.newDialogText = action.newDialogText;
-            this._rerender()
-        }
+        this._state.profileData = profileReducer(this._state.profileData, action);
+        this._state.dialogData = dialogsReducer(this._state.dialogData, action);
+        this._rerender()
     }
 };
 

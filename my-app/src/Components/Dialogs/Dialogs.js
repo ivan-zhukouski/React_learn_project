@@ -1,26 +1,26 @@
-import React, {createRef} from "react";
+import React from "react";
 import style from "./Dialogs.module.css"
 import Message from "./Messages/Messages";
 import DialogItem from "./DialogItems/DialogItems";
-import {addNewDialogTextActionCreater, updateNewDialogTextActionCreater} from "../redux/store";
+import {addNewDialogTextActionCreator, updateNewDialogTextActionCreator} from "../redux/reducers/dialogs-reducer.js";
+import Route from "react-router-dom/es/Route";
 
 const Dialogs = (props) => {
-    const dialog = props.dialogsData.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>);
+    const dialogColumn = props.dialogsData.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>);
     const messageFriend = props.messageData.map(m => <Message key={m.id} message={m.message} />);
     const messageMe = props.messageData.map(m => <Message key={m.id} message={m.message} />);
 
-    const dialogRef = createRef();
     const addDialogText = ()=>{
-        props.dispatch(addNewDialogTextActionCreater())
+        props.dispatch(addNewDialogTextActionCreator())
     };
-    const updateDialogText = ()=>{
-        const newDialogText = dialogRef.current.value;
-        props.dispatch(updateNewDialogTextActionCreater(newDialogText))
+    const updateDialogText = (event)=>{
+        const newDialogText = event.target.value;
+        props.dispatch(updateNewDialogTextActionCreator(newDialogText))
     };
     return(
         <div className={style.dialogs}>
             <div className={style.dialog_items}>
-                {dialog}
+                {dialogColumn}
             </div>
             <div className={style.messages_field}>
                 <div>
@@ -30,7 +30,7 @@ const Dialogs = (props) => {
                     {messageMe}
                 </div>
             </div>
-            <textarea onChange={updateDialogText} ref={dialogRef} value={props.dialogData.newDialogText}/>
+            <textarea onChange={updateDialogText} value={props.dialogData.newDialogText}/>
             <div>
                 <button onClick={addDialogText}>add message</button>
             </div>

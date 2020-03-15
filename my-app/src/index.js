@@ -1,10 +1,11 @@
 
 import * as serviceWorker from './serviceWorker';
-import store from "./Components/redux/store"
+import store from "./Components/redux/redux-store"
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import ReactDOM from "react-dom";
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const rerenderApplication = () => {
     const Application = <BrowserRouter>

@@ -15,6 +15,7 @@ export const store = {
             dialogsData: [
                 {name: 'Ivan', id: 1,},
                 {name: 'Dimon', id: 2,},
+                {name: 'Tema', id: 3,},
             ],
             messageData:[
                 {message:'Yo, bro!!', id: 1},

@@ -6,14 +6,15 @@ import App from "./App";
 import ReactDOM from "react-dom";
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Provider} from "react-redux";
 
 const rerenderApplication = () => {
-    const Application = <BrowserRouter>
-        <App store={store}
-             dispatch={store.dispatch.bind(store)}
-        />
-    </BrowserRouter>;
-    ReactDOM.render(Application, document.getElementById('root'));
+    ReactDOM.render(
+        <BrowserRouter>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </BrowserRouter>, document.getElementById('root'));
 };
 rerenderApplication();
 store.subscribe(rerenderApplication);

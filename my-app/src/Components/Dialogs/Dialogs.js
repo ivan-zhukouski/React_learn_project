@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Dialogs.module.css"
 import Message from "./Messages/Messages";
 import DialogItem from "./DialogItems/DialogItems";
-import Route from "react-router-dom/es/Route";
+import {Route} from "react-router-dom";
 
 const Dialogs = (props) => {
     const dialogColumn = props.dialogsData.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>);

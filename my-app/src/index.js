@@ -8,16 +8,14 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Provider} from "react-redux";
 
-const rerenderApplication = () => {
-    ReactDOM.render(
-        <BrowserRouter>
-            <Provider store={store}>
-                <App/>
-            </Provider>
-        </BrowserRouter>, document.getElementById('root'));
-};
-rerenderApplication();
-store.subscribe(rerenderApplication);
+ReactDOM.render(
+    <BrowserRouter>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    </BrowserRouter>, document.getElementById('root'));
+
+
 
 
 

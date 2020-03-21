@@ -26,7 +26,7 @@ const profileReducer = (state = initialState, action) => {
             };
             return {
                 ...state,
-                postsData: [...state.postsData, newPost], // заменяет push
+                postsData: [...state.postsData, newPost], // Like push
                 newPostText: ''
             };
         case UPDATE_POST_TEXT:

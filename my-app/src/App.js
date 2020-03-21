@@ -9,6 +9,7 @@ import {Route, Switch} from "react-router-dom";
 import News from "./Components/News/News";
 import Settings from "./Components/Settings/Settings";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
+import UsersContainer from "./Components/Users/UsersContainer";
 
 function App(props) {
     return (
@@ -22,6 +23,8 @@ function App(props) {
                            render={()=> <Profile />} />
                     <Route path='/dialogs'
                            render={()=> <DialogsContainer />} />
+                    <Route path='/users'
+                           render={()=> <UsersContainer />} />
                     <Route path='/music' component={Music}/>
                     <Route path='/news' component={News}/>
                     <Route path='/settings' component={Settings}/>

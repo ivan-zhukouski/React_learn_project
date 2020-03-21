@@ -11,6 +11,9 @@ const NavBar = (props) => {
                         <NavLink exact to='/profile' activeClassName={style.active} >Profile</NavLink>
                     </div>
                     <div className={style.link}>
+                        <NavLink to='/users' activeClassName={style.active} >Users</NavLink>
+                    </div>
+                    <div className={style.link}>
                         <NavLink to='/dialogs' activeClassName={style.active} >Massages</NavLink>
                     </div>
                     <div className={style.link}>

@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./Users.module.css";
 import user_img from "../../assets/images/user_item.png";
+import {NavLink} from "react-router-dom"
 
 const Users = (props) => {
     const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -24,9 +25,11 @@ const Users = (props) => {
     });
     const user = props.usersData.map(u => {
             return (
-                <div key={u.id} style={{border: '1px solid black'}} className='d-flex m-3'>
+                <div key={u.id} className={`d-flex m-3 ${style.userBox}`}>
                     <div className='d-flex flex-column'>
-                        <img style={{width: '30px'}} src={u.photos.small != null ? u.photos.small : user_img} alt="ava"/>
+                        <NavLink to={`/profile/2`}>
+                            <img style={{width: '50px'}} src={u.photos.small != null ? u.photos.small : user_img} alt="ava"/>
+                        </NavLink>
                         {u.followed
                             ? <button onClick={() => {
                                 props.remove(u.id)

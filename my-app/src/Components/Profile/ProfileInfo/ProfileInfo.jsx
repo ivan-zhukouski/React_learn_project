@@ -1,9 +1,15 @@
 import React from "react";
 import style from "./ProfileInfo.module.css"
-const ProfileInfo = () => {
+import PreLoader from "../../common/PreLoader/PreLoader";
+const ProfileInfo = (props) => {
+    if(!props.userProfile){
+        return <PreLoader/>
+    }
     return(
         <div className={style.profile_info}>
-            Some information
+            <div>
+                {props.userProfile.aboutMe}
+            </div>
         </div>
     )
 };

@@ -4,27 +4,32 @@ const SET_USERS = 'SET_USERS';
 const CURRENT_PAGE = 'CURRENT_PAGE';
 const PAGE_SIZE = 'PAGE_SIZE';
 const TOTAL_USERS_COUNT = 'TOTAL_USERS_COUNT';
+const LOADING = 'LOADING';
 
 //actions
-export const followAC = (userId) => ( {
+export const follow = (userId) => ( {
     type: FOLLOW,
     userId
 });
-export const removeAC = (userId) => ({
+export const remove = (userId) => ({
     type: REMOVE,
     userId
 });
-export const setUsersAC = (users) => ({
+export const setUsers = (users) => ({
     type: SET_USERS,
     users
 });
-export const currentPageAC = (currentPage) => ({
+export const changeCurrentPage = (currentPage) => ({
     type: CURRENT_PAGE,
     currentPage
 });
-export const totalUsersCountAC = (totalUsers) => ({
+export const setTotalPage = (totalUsers) => ({
     type: TOTAL_USERS_COUNT,
     totalUsers
+});
+export const isLoading = (loading)=> ({
+    type: LOADING,
+    loading
 });
 //
 const initialState = {
@@ -32,6 +37,7 @@ const initialState = {
     currentPage: 1,
     pageSize: 5,
     totalUsersCount: null,
+    isLoading: null,
 };
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -79,6 +85,11 @@ const userReducer = (state = initialState, action) => {
             return{
                 ...state,
                 totalUsersCount: action.totalUsers
+            };
+        case LOADING:
+            return{
+                ...state,
+                isLoading: action.loading
             };
         default:
             return state

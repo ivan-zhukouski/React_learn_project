@@ -42,7 +42,7 @@ const profileReducer = (state = initialState, action) => {
         case SET_USER_PROFILE:{
             return{
                 ...state,
-                userProfile: action.profile
+                userProfile: {...action.profile}
             }
         }
         default:

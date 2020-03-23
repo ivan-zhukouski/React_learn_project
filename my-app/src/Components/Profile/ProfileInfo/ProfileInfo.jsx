@@ -8,7 +8,7 @@ const ProfileInfo = (props) => {
     return(
         <div className={style.profile_info}>
             <div>
-                {props.userProfile.aboutMe}
+                Some information
             </div>
         </div>
     )

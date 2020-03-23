@@ -1,14 +1,25 @@
 import React from "react";
 import style from './Avatar.module.css'
+import {connect} from "react-redux";
+import ava_cat from "../../../assets/images/cat.jpg"
+import PreLoader from "../../common/PreLoader/PreLoader";
 
-const Avatar = () => {
+const Avatar = (props) => {
+    if(!props.userProfile){
+        return <PreLoader/>
+    }
     return (
         <div className={style.ava}>
             <div>
                 <img className={style.ava_img}
-                     src="https://i.pinimg.com/originals/bd/16/3a/bd163a127b3ee713c3d0182fb96c6bbe.jpg" alt="ava"/>
+                     src={props.userProfile.photos.large != null ? props.userProfile.photos.large : ava_cat } alt="ava"/>
             </div>
         </div>
     )
 };
-export default Avatar
+const mapStateToProps = (state) => {
+    return {
+        userProfile: state.profileData.userProfile
+    }
+};
+export default connect(mapStateToProps)(Avatar);

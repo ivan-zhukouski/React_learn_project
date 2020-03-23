@@ -10,20 +10,24 @@ import {
 } from "../redux/reducers/users-reducer";
 import * as axios from "axios";
 import Users from "./Users";
+import UserProfileInfo from "./UserProfileInfo";
+import {Route} from "react-router-dom";
+import {setUserProfile} from "../redux/reducers/profile-reducer";
 
 class UsersContainer extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         this.props.isLoading(true);
         axios
             .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
-
                 this.props.setUsers(response.data.items);
                 this.props.setTotalPage(response.data.totalCount);
+                this.props.isLoading(false)
+            });
+        axios
+            .get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+            .then(response => {
+                this.props.setUserProfile(response.data);
                 this.props.isLoading(false)
             })
     }
@@ -38,17 +42,22 @@ class UsersContainer extends React.Component {
                 this.props.isLoading(false)
             })
     };
-
     render() {
         return (
-            <Users totalUsersCount={this.props.totalUsersCount}
-                   pageSize={this.props.pageSize}
-                   onPageChange={this.onPageChange}
-                   currentPage={this.props.currentPage}
-                   usersData={this.props.usersData}
-                   remove={this.props.remove}
-                   follow={this.props.follow}
-                   loading={this.props.loading}/>
+            <>
+                <Route path='/users/profile-info'
+                       render={()=> <UserProfileInfo userProfile={this.props.userProfile}/>} />
+                <Route exact path='/users'
+                       render={()=> <Users totalUsersCount={this.props.totalUsersCount}
+                                           pageSize={this.props.pageSize}
+                                           onPageChange={this.onPageChange}
+                                           currentPage={this.props.currentPage}
+                                           usersData={this.props.usersData}
+                                           remove={this.props.remove}
+                                           follow={this.props.follow}
+                                           />} />
+            </>
+
         )
     }
 }
@@ -59,6 +68,7 @@ const mapStateToProps = (state) => {
         currentPage: state.usersData.currentPage,
         pageSize: state.usersData.pageSize,
         totalUsersCount: state.usersData.totalUsersCount,
+        userProfile: state.profileData.userProfile
     }
 };
 const actions = {
@@ -68,6 +78,7 @@ const actions = {
     changeCurrentPage,
     setTotalPage,
     isLoading,
+    setUserProfile,
 };
 export default connect(mapStateToProps, actions)(UsersContainer);
 

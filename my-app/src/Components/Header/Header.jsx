@@ -7,7 +7,7 @@ class Header extends React.Component {
             <div className={style.main_header}>
                 <header >
                     <div>
-                        <img className={this.props.isLoading && 'App-logo'} style={{width: '70px', height: '70px'}}
+                        <img className={this.props.isLoading ? 'App-logo' : ''} style={{width: '70px', height: '70px'}}
                              src='https://logosolusa.com/wp-content/uploads/parser/Will-Logo-1.png' alt='logo'/>
                     </div>
                 </header>

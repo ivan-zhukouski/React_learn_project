@@ -1,10 +1,11 @@
 import React from "react";
 import style from "./Post.module.css"
+import user_img from "../../../../assets/images/user_item.png";
 
 const Post = (props) => {
     return(
         <div className={style.main_post_div}>
-            <img className={style.ava} src = 'https://images.assetsdelivery.com/compings_v2/tuktukdesign/tuktukdesign1608/tuktukdesign160800038.jpg'/>
+            <img className={style.ava} src = {user_img}/>
             <div className={style.post}>
                 {props.message}
             </div>

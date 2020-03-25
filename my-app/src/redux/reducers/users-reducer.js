@@ -5,7 +5,8 @@ const CURRENT_PAGE = 'CURRENT_PAGE';
 const PAGE_SIZE = 'PAGE_SIZE';
 const TOTAL_USERS_COUNT = 'TOTAL_USERS_COUNT';
 const LOADING = 'LOADING';
-const USER_PROFILE_ID = 'USER_PROFILE_ID';
+const FOLLOWING_PROGRESS= 'FOLLOWING_PROGRESS';
+
 
 //actions
 export const follow = (userId) => ( {
@@ -32,9 +33,9 @@ export const isLoading = (loading)=> ({
     type: LOADING,
     loading
 });
-export const setUserProfileId = (setUserId)=> ({
-    type: USER_PROFILE_ID,
-    setUserId
+export const isFollowing = (following, userId)=> ({
+    type: FOLLOWING_PROGRESS,
+    following, userId
 });
 
 //
@@ -45,6 +46,7 @@ const initialState = {
     totalUsersCount: null,
     isLoading: null,
     userProfileID: 2,
+    isFollowingProgress: [],
 };
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -98,10 +100,12 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: action.loading
             };
-        case USER_PROFILE_ID:
+        case FOLLOWING_PROGRESS:
             return{
                 ...state,
-                userProfileID: action.setUserId
+                isFollowingProgress: action.following
+                    ? [...state.isFollowingProgress, action.userId]
+                    : state.isFollowingProgress.filter(id => id !== action.userId )
             };
         default:
             return state

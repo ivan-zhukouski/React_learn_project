@@ -1,10 +1,10 @@
 import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {setUserProfile} from "../redux/reducers/profile-reducer";
+import {setUserProfile} from "../../redux/reducers/profile-reducer";
 import * as axios from "axios";
 import {Route, withRouter} from "react-router-dom";
-import {isLoading} from "../redux/reducers/users-reducer";
+import {isLoading} from "../../redux/reducers/users-reducer";
 
 class ProfileContainer extends React.Component{
     componentDidMount() {

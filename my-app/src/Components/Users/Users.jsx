@@ -2,6 +2,8 @@ import React from "react";
 import style from "./Users.module.css";
 import user_img from "../../assets/images/user_item.png";
 import {NavLink} from "react-router-dom";
+import * as axios from "axios";
+import {usersAPI} from "../../API/api";
 
 const Users = (props) => {
     const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -27,15 +29,30 @@ const Users = (props) => {
             return (
                 <div key={u.id} className={`d-flex m-3 ${style.userBox}`}>
                     <div className='d-flex flex-column'>
-                        <NavLink exact to={`/profile/${u.id}`} >
-                            <img style={{width: '50px'}} src={u.photos.small != null ? u.photos.small : user_img} alt="ava"/>
+                        <NavLink exact to={`/profile/${u.id}`}>
+                            <img style={{width: '50px'}} src={u.photos.small != null ? u.photos.small : user_img}
+                                 alt="ava"/>
                         </NavLink>
                         {u.followed
-                            ? <button onClick={() => {
-                                props.remove(u.id)
+                            ? <button disabled={props.isFollowingProgress.some(item=> item === u.id)} onClick={() => {
+                                props.isFollowing(true, u.id);
+                               usersAPI.removeUser(u.id)
+                                    .then(data => {
+                                        if (data.resultCode === 0) {
+                                            props.remove(u.id)
+                                        }
+                                        props.isFollowing(false, u.id);
+                                    });
                             }}>Remove</button>
-                            : <button onClick={() => {
-                                props.follow(u.id)
+                            : <button disabled={props.isFollowingProgress.some(item=> item === u.id)} onClick={() => {
+                                props.isFollowing(true, u.id);
+                               usersAPI.followUser(u.id)
+                                    .then(data => {
+                                        if (data.resultCode === 0) {
+                                            props.follow(u.id)
+                                        }
+                                        props.isFollowing(false, u.id);
+                                    });
                             }}>Follow</button>}
                     </div>
                     <div className='d-flex '>

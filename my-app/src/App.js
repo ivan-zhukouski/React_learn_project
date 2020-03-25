@@ -10,7 +10,6 @@ import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import UsersContainer from "./Components/Users/UsersContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
-import UserProfileInfo from "./Components/Users/UserProfileInfo";
 
 function App(props) {
     return (
@@ -20,7 +19,7 @@ function App(props) {
             <Avatar/>
             <div className='app_wrapper_content'>
                 <Switch>
-                    <Route exact path='/profile'
+                    <Route path='/profile/:userId?'
                            render={()=> <ProfileContainer />} />
                     <Route path='/dialogs'
                            render={()=> <DialogsContainer />} />

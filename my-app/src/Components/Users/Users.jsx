@@ -27,7 +27,7 @@ const Users = (props) => {
             return (
                 <div key={u.id} className={`d-flex m-3 ${style.userBox}`}>
                     <div className='d-flex flex-column'>
-                        <NavLink exact to='/users/profile-info/2' >
+                        <NavLink exact to={`/profile/${u.id}`} >
                             <img style={{width: '50px'}} src={u.photos.small != null ? u.photos.small : user_img} alt="ava"/>
                         </NavLink>
                         {u.followed

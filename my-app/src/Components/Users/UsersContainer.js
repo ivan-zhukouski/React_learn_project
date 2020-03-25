@@ -10,11 +10,11 @@ import {
 } from "../redux/reducers/users-reducer";
 import * as axios from "axios";
 import Users from "./Users";
-import UserProfileInfo from "./UserProfileInfo";
 import {Route} from "react-router-dom";
 import {setUserProfile} from "../redux/reducers/profile-reducer";
 
 class UsersContainer extends React.Component {
+
     componentDidMount() {
         this.props.isLoading(true);
         axios
@@ -24,12 +24,7 @@ class UsersContainer extends React.Component {
                 this.props.setTotalPage(response.data.totalCount);
                 this.props.isLoading(false)
             });
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
-            .then(response => {
-                this.props.setUserProfile(response.data);
-                this.props.isLoading(false)
-            })
+
     }
 
     onPageChange = (page) => {
@@ -45,8 +40,6 @@ class UsersContainer extends React.Component {
     render() {
         return (
             <>
-                <Route path='/users/profile-info'
-                       render={()=> <UserProfileInfo userProfile={this.props.userProfile}/>} />
                 <Route exact path='/users'
                        render={()=> <Users totalUsersCount={this.props.totalUsersCount}
                                            pageSize={this.props.pageSize}
@@ -68,7 +61,7 @@ const mapStateToProps = (state) => {
         currentPage: state.usersData.currentPage,
         pageSize: state.usersData.pageSize,
         totalUsersCount: state.usersData.totalUsersCount,
-        userProfile: state.profileData.userProfile
+        userProfile: state.profileData.userProfile,
     }
 };
 const actions = {
@@ -79,6 +72,7 @@ const actions = {
     setTotalPage,
     isLoading,
     setUserProfile,
+
 };
 export default connect(mapStateToProps, actions)(UsersContainer);
 

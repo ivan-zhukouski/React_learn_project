@@ -5,6 +5,7 @@ const CURRENT_PAGE = 'CURRENT_PAGE';
 const PAGE_SIZE = 'PAGE_SIZE';
 const TOTAL_USERS_COUNT = 'TOTAL_USERS_COUNT';
 const LOADING = 'LOADING';
+const USER_PROFILE_ID = 'USER_PROFILE_ID';
 
 //actions
 export const follow = (userId) => ( {
@@ -31,6 +32,11 @@ export const isLoading = (loading)=> ({
     type: LOADING,
     loading
 });
+export const setUserProfileId = (setUserId)=> ({
+    type: USER_PROFILE_ID,
+    setUserId
+});
+
 //
 const initialState = {
     users: [],
@@ -38,6 +44,7 @@ const initialState = {
     pageSize: 5,
     totalUsersCount: null,
     isLoading: null,
+    userProfileID: 2,
 };
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -90,6 +97,11 @@ const userReducer = (state = initialState, action) => {
             return{
                 ...state,
                 isLoading: action.loading
+            };
+        case USER_PROFILE_ID:
+            return{
+                ...state,
+                userProfileID: action.setUserId
             };
         default:
             return state

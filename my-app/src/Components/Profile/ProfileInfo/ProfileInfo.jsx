@@ -6,9 +6,14 @@ const ProfileInfo = (props) => {
         return <PreLoader/>
     }
     return(
-        <div className={style.profile_info}>
-            <div>
-                Some information
+        <div>
+            <h3 className='m-3'>Profile of '{props.userProfile.fullName}'</h3>
+            <div className='d-flex'>
+                <div className='m-3'>
+                    Status: {props.userProfile.aboutMe} <br/>
+                    FaceBook: {props.userProfile.contacts.facebook}<br/>
+                    vk: {props.userProfile.contacts.vk}
+                </div>
             </div>
         </div>
     )

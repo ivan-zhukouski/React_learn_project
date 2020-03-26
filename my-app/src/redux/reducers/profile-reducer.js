@@ -1,3 +1,6 @@
+import {usersAPI} from "../../API/api";
+import {isLoading} from "./users-reducer";
+
 const ADD_NEW_POST = 'ADD_NEW_POST';
 const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
 const SET_USER_PROFILE ='SET_USER_PROFILE';
@@ -12,6 +15,18 @@ export const updatePostTextActionCreator = (newText) => ({
 export const setUserProfile = (profile)=>({
     type: SET_USER_PROFILE, profile
 });
+//
+//thunk
+export const getUserProfile = (userId)=> {
+    return (dispatch)=>{
+        dispatch(isLoading(true));
+        usersAPI.getUserProfile(userId)
+            .then(response => {
+                dispatch(setUserProfile(response));
+                dispatch(isLoading(false))
+            })
+    }
+};
 //
 const initialState ={
     postsData: [

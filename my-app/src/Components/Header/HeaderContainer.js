@@ -1,23 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
 import Header from "./Header"
-import {setAuthData, updateMessage} from "../../redux/reducers/auth-reducer";
-import {authAPI} from "../../API/api";
+import {getMyProfile} from "../../redux/reducers/auth-reducer";
 class HeaderContainer extends React.Component{
     componentDidMount() {
-        authAPI.getMe()
-            .then(data=>{
-                let {id,email,login} = data.data;
-                if(!data.data.id){
-                    this.props.updateMessage('You are NOT authorized')
-                } else {
-                    this.props.setAuthData(id,email,login);
-                    this.props.updateMessage(`Hallo ${data.data.login}`)
-                }
-            })
-
+        this.props.getMyProfile()
     }
-
     render(){
         return(
             <Header message={this.props.message} isLoading={this.props.isLoading} />
@@ -31,7 +19,6 @@ const mapStateToProps = (state)=>{
     }
 };
 const actions = {
-    setAuthData,
-    updateMessage
+    getMyProfile
 };
 export default connect(mapStateToProps,actions)(HeaderContainer);

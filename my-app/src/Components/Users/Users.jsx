@@ -2,8 +2,6 @@ import React from "react";
 import style from "./Users.module.css";
 import user_img from "../../assets/images/user_item.png";
 import {NavLink} from "react-router-dom";
-import * as axios from "axios";
-import {usersAPI} from "../../API/api";
 
 const Users = (props) => {
     const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -35,24 +33,10 @@ const Users = (props) => {
                         </NavLink>
                         {u.followed
                             ? <button disabled={props.isFollowingProgress.some(item=> item === u.id)} onClick={() => {
-                                props.isFollowing(true, u.id);
-                               usersAPI.removeUser(u.id)
-                                    .then(data => {
-                                        if (data.resultCode === 0) {
-                                            props.remove(u.id)
-                                        }
-                                        props.isFollowing(false, u.id);
-                                    });
+                                props.removeUser(u.id)
                             }}>Remove</button>
                             : <button disabled={props.isFollowingProgress.some(item=> item === u.id)} onClick={() => {
-                                props.isFollowing(true, u.id);
-                               usersAPI.followUser(u.id)
-                                    .then(data => {
-                                        if (data.resultCode === 0) {
-                                            props.follow(u.id)
-                                        }
-                                        props.isFollowing(false, u.id);
-                                    });
+                                props.followUser(u.id)
                             }}>Follow</button>}
                     </div>
                     <div className='d-flex '>

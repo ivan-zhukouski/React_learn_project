@@ -2,40 +2,22 @@ import React from "react";
 import {connect} from "react-redux";
 import {
     changeCurrentPage,
-    follow,
-    isLoading,
-    remove,
     setUsers,
-    setTotalPage, isFollowing,
+    setTotalPage,getUsers, removeUser, followUser,
 } from "../../redux/reducers/users-reducer";
 import Users from "./Users";
 import {Route} from "react-router-dom";
 import {setUserProfile} from "../../redux/reducers/profile-reducer";
-import {usersAPI as userAPI} from "../../API/api";
 
 class UsersContainer extends React.Component {
 
     componentDidMount() {
-        this.props.isLoading(true);
-        userAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.setUsers(data.items);
-                this.props.setTotalPage(data.totalCount);
-                this.props.isLoading(false)
-            });
-
+        this.props.getUsers(this.props.currentPage,this.props.pageSize);
     }
-
     onPageChange = (page) => {
         this.props.changeCurrentPage(page);
-        this.props.isLoading(true);
-        userAPI.changeUserPage(page, this.props.pageSize)
-            .then(data => {
-                this.props.setUsers(data.items);
-                this.props.isLoading(false)
-            })
+        this.props.getUsers(page, this.props.pageSize);
     };
-
     render() {
         return (
             <>
@@ -45,10 +27,9 @@ class UsersContainer extends React.Component {
                                             onPageChange={this.onPageChange}
                                             currentPage={this.props.currentPage}
                                             usersData={this.props.usersData}
-                                            remove={this.props.remove}
-                                            follow={this.props.follow}
+                                            removeUser={this.props.removeUser}
+                                            followUser={this.props.followUser}
                                             isFollowingProgress={this.props.isFollowingProgress}
-                                            isFollowing={this.props.isFollowing}
                        />}/>
             </>
         )
@@ -66,14 +47,13 @@ const mapStateToProps = (state) => {
     }
 };
 const actions = {
-    follow,
-    remove,
     setUsers,
     changeCurrentPage,
     setTotalPage,
-    isLoading,
     setUserProfile,
-    isFollowing
+    getUsers,
+    removeUser,
+    followUser,
 
 };
 export default connect(mapStateToProps, actions)(UsersContainer);

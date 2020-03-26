@@ -1,3 +1,5 @@
+import {usersAPI as userAPI} from "../../API/api";
+
 const FOLLOW = 'FOLLOW';
 const REMOVE = 'REMOVE';
 const SET_USERS = 'SET_USERS';
@@ -37,7 +39,43 @@ export const isFollowing = (following, userId)=> ({
     type: FOLLOWING_PROGRESS,
     following, userId
 });
-
+//
+//thunk
+export const getUsers =(currentPage, pageSize)=> {
+    return (dispatch)=>{
+        dispatch(isLoading(true));
+        userAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(setUsers(data.items));
+                dispatch(setTotalPage(data.totalCount));
+                dispatch(isLoading(false))
+            });
+    }
+};
+export const removeUser = (userId)=>{
+    return (dispatch)=>{
+        dispatch(isFollowing(true, userId));
+        userAPI.removeUser(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(remove(userId))
+                }
+                dispatch(isFollowing(false, userId));
+            });
+    }
+};
+export const followUser = (userId)=>{
+    return (dispatch)=>{
+        dispatch(isFollowing(true, userId));
+        userAPI.followUser(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(follow(userId))
+                }
+                dispatch(isFollowing(false, userId));
+            });
+    }
+};
 //
 const initialState = {
     users: [],

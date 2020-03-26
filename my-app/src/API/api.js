@@ -14,12 +14,6 @@ export const usersAPI = {
                 return response.data
             })
     },
-    changeUserPage(page,pageSize){
-        return instance.get(`users?page=${page}&count=${pageSize}`)
-            .then(response=>{
-                return response.data
-            })
-    },
     followUser(id){
         return instance.post(`follow/${id}`)
             .then(response =>{
@@ -29,6 +23,12 @@ export const usersAPI = {
     removeUser(id){
         return instance.delete(`follow/${id}`)
             .then(response =>{
+                return response.data
+            })
+    },
+    getUserProfile(userId){
+        return instance.get(`profile/${userId}`)
+            .then(response=>{
                 return response.data
             })
     }

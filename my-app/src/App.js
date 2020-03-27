@@ -10,6 +10,7 @@ import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import UsersContainer from "./Components/Users/UsersContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
+import Login from "./Components/Login/Login";
 
 function App(props) {
     return (
@@ -28,6 +29,7 @@ function App(props) {
                     <Route path='/music' component={Music}/>
                     <Route path='/news' component={News}/>
                     <Route path='/settings' component={Settings}/>
+                    <Route path='/login' render={()=><Login/>}/>
                 </Switch>
             </div>
         </div>

@@ -8,6 +8,8 @@ import {
 import Users from "./Users";
 import {Route} from "react-router-dom";
 import {setUserProfile} from "../../redux/reducers/profile-reducer";
+import {withAuthRedirect} from "../../HOC/withAuthRedirect";
+import {compose} from "redux";
 
 class UsersContainer extends React.Component {
 
@@ -43,7 +45,7 @@ const mapStateToProps = (state) => {
         pageSize: state.usersData.pageSize,
         totalUsersCount: state.usersData.totalUsersCount,
         userProfile: state.profileData.userProfile,
-        isFollowingProgress: state.usersData.isFollowingProgress
+        isFollowingProgress: state.usersData.isFollowingProgress,
     }
 };
 const actions = {
@@ -56,5 +58,9 @@ const actions = {
     followUser,
 
 };
-export default connect(mapStateToProps, actions)(UsersContainer);
+export default compose(
+    connect(mapStateToProps, actions),
+    withAuthRedirect
+)(UsersContainer)
+
 

@@ -2,3 +2,6 @@
     padding: 15px;
     grid-area: prof_info;
 }
+.status{
+    cursor: pointer;
+}

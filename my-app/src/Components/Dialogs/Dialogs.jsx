@@ -3,22 +3,16 @@ import style from "./Dialogs.module.css"
 import Message from "./Messages/Messages";
 import DialogItem from "./DialogItems/DialogItems";
 import {Route} from "react-router-dom";
+import {Field, reduxForm} from "redux-form";
 
 const Dialogs = (props) => {
     const dialogColumn = props.dialogsData.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>);
     const messageFriend = props.messageData.map(m => <Message key={m.id} message={m.message}/>);
     const messageMe = props.messageData.map(m => <Message key={m.id} message={m.message}/>);
 
-    const addDialogText = () => {
-        if(props.dialogData.newDialogText !==''){
-            props.addDialogText();
-        } else {
-            return false
-        }
-    };
-    const updateDialogText = (event) => {
-        const newDialogText = event.target.value;
-        props.updateDialogText(newDialogText)
+    const onSubmit = (newDialog) => {
+        console.log(newDialog);
+        props.addDialogText(newDialog.newDialog)
     };
     return (
         <div className={style.dialogs}>
@@ -36,15 +30,25 @@ const Dialogs = (props) => {
                                    {messageMe}
                                </div>
                            </div>}/>
-                <div className='d-flex justify-content-center'>
-                    <textarea className={style.textarea} onChange={updateDialogText} value={props.dialogData.newDialogText}/>
-                    <div className='m-3'>
-                        <button onClick={addDialogText}>Send</button>
-                    </div>
-                </div>
+                <DialogFieldRedux onSubmit={onSubmit}/>
             </div>
 
         </div>
     )
 };
+const DialogField = (props) => {
+    return(
+        <form onSubmit={props.handleSubmit}>
+            <div className='d-flex justify-content-center'>
+                <Field name='newDialog' component='textarea' type='text' />
+                <div className='m-3'>
+                    <button>Send</button>
+                </div>
+            </div>
+        </form>
+    )
+};
+const DialogFieldRedux = reduxForm({
+    form: 'dialogField'
+})(DialogField);
 export default Dialogs

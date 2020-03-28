@@ -1,11 +1,7 @@
 const ADD_NEW_DIALOG_TEXT = 'ADD_NEW_DIALOG_TEXT';
-const UPDATE_NEW_DIALOG_TEXT = 'UPDATE_NEW_DIALOG_TEXT';
 
-export const addNewDialogTextActionCreator = () => ({
-    type: ADD_NEW_DIALOG_TEXT,
-});
-export const updateNewDialogTextActionCreator = (newDialogText)=> ({
-    type:UPDATE_NEW_DIALOG_TEXT, newDialogText: newDialogText
+export const addNewDialogTextActionCreator = (newDialog) => ({
+    type: ADD_NEW_DIALOG_TEXT,newDialog
 });
 
 const initialStore = {
@@ -19,24 +15,17 @@ const initialStore = {
         {message:'How are you??', id: 2},
         {message:'How are you??', id: 3},
     ],
-    newDialogText: '',
 };
 const dialogsReducer = (state = initialStore, action) => {
     switch (action.type) {
         case ADD_NEW_DIALOG_TEXT:
             const newDialogText = {
                 id:4,
-                message: state.newDialogText,
+                message: action.newDialog
             };
             return {
                 ...state,
                 messageData: [...state.messageData, newDialogText],
-                newDialogText: ''
-            };
-        case UPDATE_NEW_DIALOG_TEXT:
-            return {
-                ...state,
-                newDialogText: action.newDialogText
             };
         default:
             return state

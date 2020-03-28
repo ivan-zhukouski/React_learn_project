@@ -1,13 +1,18 @@
 import {authAPI} from "../../API/api";
+import {isLoading} from "./users-reducer";
 
 const SET_AUTH_DATA = 'SET_AUTH_DATA';
 const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+const SET_EMAIL = 'SET_EMAIL';
 //actions
 export const setAuthData = (id,email,login) => ({
     type: SET_AUTH_DATA, authData: {id,email,login}
 });
 export const updateMessage = (message) => ({
     type: UPDATE_MESSAGE, message
+});
+export const setEmail = (email)=> ({
+    type: SET_EMAIL, email
 });
 //
 //thunk
@@ -25,14 +30,28 @@ export const getMyProfile = ()=>{
             })
     }
 };
+export const login = (email,password) => {
+    return (dispatch)=>{
+        dispatch(isLoading(true));
+        authAPI.login(email, password)
+            .then(response=>{
+                if(response.data.resultCode === 0){
+                    getMyProfile();
+                    dispatch(isLoading(false));
+                }
+            })
+    }
+};
 //
 
 const initialStore = {
     id: null,
     email: null,
+    password: null,
     login: null,
     message: null,
-    isAuth: false
+    isAuth: false,
+
 };
 const authReducer = (state = initialStore, action) => {
     switch (action.type) {
@@ -48,6 +67,11 @@ const authReducer = (state = initialStore, action) => {
                 message: action.message
             }
         }
+        case SET_EMAIL:
+            return{
+                ...state,
+                email: action.email
+            };
         default:
             return state
     }

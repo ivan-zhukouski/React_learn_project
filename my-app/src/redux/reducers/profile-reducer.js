@@ -4,6 +4,7 @@ import {isLoading} from "./users-reducer";
 const ADD_NEW_POST = 'ADD_NEW_POST';
 const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
 const SET_USER_PROFILE ='SET_USER_PROFILE';
+const SET_USER_STATUS='SET_USER_STATUS';
 
 //actions
 export const addPostActionCreator = ()=> ( {
@@ -14,6 +15,9 @@ export const updatePostTextActionCreator = (newText) => ({
 });
 export const setUserProfile = (profile)=>({
     type: SET_USER_PROFILE, profile
+});
+export const setUserStatus = (status) =>({
+    type: SET_USER_STATUS, status
 });
 //
 //thunk
@@ -27,6 +31,29 @@ export const getUserProfile = (userId)=> {
             })
     }
 };
+export const getUserStatus = (userId) => {
+    return (dispatch) => {
+        dispatch(isLoading(true));
+        usersAPI.getUsersStatus(userId)
+            .then(response=>{
+                dispatch(setUserStatus(response.data));
+                dispatch(isLoading(false))
+            })
+    }
+};
+export const updateUserStatus = (status) => {
+    return (dispatch) => {
+        dispatch(isLoading(true));
+        usersAPI.updateUserStatus(status)
+            .then(response=>{
+                if(response.data.resultCode === 0){
+                    dispatch(setUserStatus(status));
+                    dispatch(isLoading(false))
+                }
+
+            })
+    }
+};
 //
 const initialState ={
     postsData: [
@@ -35,6 +62,7 @@ const initialState ={
     ],
     newPostText: '',
     userProfile: null,
+    userStatus: '',
 };
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -54,12 +82,16 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 newPostText: action.newText
             };
-        case SET_USER_PROFILE:{
+        case SET_USER_PROFILE:
             return{
                 ...state,
                 userProfile: {...action.profile}
-            }
-        }
+            };
+        case SET_USER_STATUS:
+            return {
+                ...state,
+                userStatus: action.status
+            };
         default:
             return state
     }

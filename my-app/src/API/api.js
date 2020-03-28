@@ -31,6 +31,12 @@ export const usersAPI = {
             .then(response=>{
                 return response.data
             })
+    },
+    getUsersStatus(userId){
+        return instance.get(`profile/status/${userId}`)
+    },
+    updateUserStatus(status){
+        return instance.put(`profile/status`,{status:status})
     }
 };
 
@@ -40,5 +46,11 @@ export const authAPI = {
             .then(response => {
                 return response.data
             })
+    },
+    login(email, password){
+        return instance.post(`auth/login`,{
+            email: email,
+            password: password
+        })
     }
 };

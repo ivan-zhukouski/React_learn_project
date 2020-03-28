@@ -8,7 +8,8 @@ const ProfileInfo = (props) => {
     return(
         <div>
             <h3 className='m-3'>Profile of '{props.userProfile.fullName}'</h3>
-            <ProfileStatus/>
+            <ProfileStatus userStatus={props.userStatus}
+                           updateUserStatus={props.updateUserStatus}/>
             <div className='d-flex'>
                 <div className='m-3'>
                     Status: {props.userProfile.aboutMe} <br/>

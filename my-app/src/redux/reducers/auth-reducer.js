@@ -16,7 +16,7 @@ export const updateMessage = (message) => ({
 //thunk
 export const getMyProfile = () => {
     return (dispatch)=>{
-        authAPI.getMe()
+        return authAPI.getMe()
             .then(response=>{
                 let {id,email,login} = response.data;
                 if(!response.data.id){

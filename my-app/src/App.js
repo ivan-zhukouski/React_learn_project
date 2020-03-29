@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import "./App.css";
 import NavBar from "./Components/Navbar/Navbar";
 import Avatar from "./Components/Profile/Avatar/Avatar";
@@ -12,28 +12,30 @@ import HeaderContainer from "./Components/Header/HeaderContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
 import Login from "./Components/Login/Login";
 
-function App(props) {
-    return (
-        <div className='App_wrapper'>
-            <HeaderContainer />
-            <NavBar />
-            <Avatar/>
-            <div className='app_wrapper_content'>
-                <Switch>
-                    <Route path='/profile/:userId?'
-                           render={()=> <ProfileContainer />} />
-                    <Route path='/dialogs'
-                           render={()=> <DialogsContainer />} />
-                    <Route path='/users'
-                           render={()=> <UsersContainer />} />
-                    <Route path='/music' component={Music}/>
-                    <Route path='/news' component={News}/>
-                    <Route path='/settings' component={Settings}/>
-                    <Route path='/login' render={()=><Login/>}/>
-                </Switch>
+class App extends Component {
+    render() {
+        return (
+            <div className='App_wrapper'>
+                <HeaderContainer/>
+                <NavBar/>
+                <Avatar/>
+                <div className='app_wrapper_content'>
+                    <Switch>
+                        <Route path='/profile/:userId?'
+                               render={() => <ProfileContainer/>}/>
+                        <Route path='/dialogs'
+                               render={() => <DialogsContainer/>}/>
+                        <Route path='/users'
+                               render={() => <UsersContainer/>}/>
+                        <Route path='/music' component={Music}/>
+                        <Route path='/news' component={News}/>
+                        <Route path='/settings' component={Settings}/>
+                        <Route path='/login' render={() => <Login/>}/>
+                    </Switch>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default App;

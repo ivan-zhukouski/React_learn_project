@@ -4,6 +4,8 @@ import Message from "./Messages/Messages";
 import DialogItem from "./DialogItems/DialogItems";
 import {Route} from "react-router-dom";
 import {Field, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../FormControls/validators/validators";
+import {TextArea} from "../../FormControls/RenderFormPart";
 
 const Dialogs = (props) => {
     const dialogColumn = props.dialogsData.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>);
@@ -36,11 +38,16 @@ const Dialogs = (props) => {
         </div>
     )
 };
+
+const maxLength10 = maxLengthCreator(10);
 const DialogField = (props) => {
     return(
         <form onSubmit={props.handleSubmit}>
             <div className='d-flex justify-content-center'>
-                <Field name='newDialog' component='textarea' type='text' />
+                <Field name='newDialog'
+                       component={TextArea}
+                       type='text'
+                       validate={[required, maxLength10 ]} />
                 <div className='m-3'>
                     <button>Send</button>
                 </div>
@@ -49,6 +56,6 @@ const DialogField = (props) => {
     )
 };
 const DialogFieldRedux = reduxForm({
-    form: 'dialogField'
+    form: 'addDialogForm'
 })(DialogField);
 export default Dialogs

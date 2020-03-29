@@ -1,42 +1,57 @@
 import {authAPI} from "../../API/api";
 import {isLoading} from "./users-reducer";
+import {stopSubmit} from "redux-form";
 
 const SET_AUTH_DATA = 'SET_AUTH_DATA';
 const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
 const SET_EMAIL = 'SET_EMAIL';
 //actions
-export const setAuthData = (id,email,login) => ({
-    type: SET_AUTH_DATA, authData: {id,email,login}
+export const setAuthData = (id,email,login, isAuth) => ({
+    type: SET_AUTH_DATA, authData: {id,email,login, isAuth}
 });
 export const updateMessage = (message) => ({
     type: UPDATE_MESSAGE, message
 });
-export const setEmail = (email)=> ({
-    type: SET_EMAIL, email
-});
 //
 //thunk
-export const getMyProfile = ()=>{
+export const getMyProfile = () => {
     return (dispatch)=>{
         authAPI.getMe()
-            .then(data=>{
-                let {id,email,login} = data.data;
-                if(!data.data.id){
+            .then(response=>{
+                let {id,email,login} = response.data;
+                if(!response.data.id){
                     dispatch(updateMessage('You are NOT authorized'))
                 } else {
-                    dispatch(setAuthData(id,email,login));
-                    dispatch(updateMessage(`Hallo ${data.data.login}`))
+                    dispatch(setAuthData(id,email,login,true));
+                    dispatch(updateMessage(`Hallo ${response.data.login}`))
                 }
             })
     }
 };
-export const login = (email,password) => {
+export const login = (email,password, rememberMe) => {
     return (dispatch)=>{
+
         dispatch(isLoading(true));
-        authAPI.login(email, password)
+        authAPI.login(email, password, rememberMe)
             .then(response=>{
                 if(response.data.resultCode === 0){
-                    getMyProfile();
+                    dispatch(getMyProfile());
+                    dispatch(isLoading(false));
+                } else{
+                    const message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+                    dispatch(stopSubmit('login',{_error: message}));
+                }
+            })
+    }
+};
+export const logout = () => {
+    return (dispatch) => {
+        dispatch(isLoading(true));
+        authAPI.logout()
+            .then(response => {
+                if(response.data.resultCode === 0){
+                    dispatch(setAuthData(null,null,null,false));
+                    dispatch(updateMessage('You are NOT authorized'));
                     dispatch(isLoading(false));
                 }
             })
@@ -47,7 +62,6 @@ export const login = (email,password) => {
 const initialStore = {
     id: null,
     email: null,
-    password: null,
     login: null,
     message: null,
     isAuth: false,
@@ -59,7 +73,6 @@ const authReducer = (state = initialStore, action) => {
            return {
                ...state,
                ...action.authData,
-               isAuth: true
             };
         case UPDATE_MESSAGE:{
             return{

@@ -7,7 +7,7 @@ const MyPosts = (props) => {
 
     const onSubmit = (postData) => {
         console.log(postData);
-        props.addNewPost(postData.postField);
+        props.addNewPost(postData.newPost);
     };
     return (
         <div className={style.myPost}>
@@ -23,7 +23,7 @@ const MyPosts = (props) => {
 const PostField = (props) => {
     return(
         <form onSubmit={props.handleSubmit}>
-            <Field name={'postField'} component={'input'} type={'text'} />
+            <Field name={'newPost'} component={'input'} type={'text'} />
             <div>
                 <button>Add post</button>
             </div>
@@ -31,6 +31,6 @@ const PostField = (props) => {
     )
 };
 const PostFieldRedux = reduxForm({
-    form: 'postField'
+    form: 'addPostForm'
 })(PostField);
 export default MyPosts

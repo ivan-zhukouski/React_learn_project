@@ -10,6 +10,13 @@ import {Route} from "react-router-dom";
 import {setUserProfile} from "../../redux/reducers/profile-reducer";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage, getIsFollowingProgress,
+    getPageSize,
+    getTotalUsersCount,
+    getUserProfile,
+    getUsersData
+} from "../../redux/selectors/user-selectors";
 
 class UsersContainer extends React.Component {
 
@@ -40,12 +47,12 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        usersData: state.usersData.users,
-        currentPage: state.usersData.currentPage,
-        pageSize: state.usersData.pageSize,
-        totalUsersCount: state.usersData.totalUsersCount,
-        userProfile: state.profileData.userProfile,
-        isFollowingProgress: state.usersData.isFollowingProgress,
+        usersData: getUsersData(state),
+        currentPage: getCurrentPage(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        userProfile: getUserProfile(state),
+        isFollowingProgress: getIsFollowingProgress(state),
     }
 };
 const actions = {

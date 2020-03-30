@@ -17,7 +17,7 @@ export const setUserStatus = (status) =>({
 });
 //
 //thunk
-export const getUserProfile = (userId)=> {
+export const getUserProfileApi = (userId)=> {
     return (dispatch)=>{
         dispatch(isLoading(true));
         usersAPI.getUserProfile(userId)

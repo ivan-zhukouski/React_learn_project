@@ -1,6 +1,6 @@
 import React from "react";
 import PreLoader from "../../common/PreLoader/PreLoader";
-import ProfileStatus from "./ProfileStatus";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 const ProfileInfo = (props) => {
     if(!props.userProfile){
         return <PreLoader/>
@@ -8,7 +8,7 @@ const ProfileInfo = (props) => {
     return(
         <div>
             <h3 className='m-3'>Profile of '{props.userProfile.fullName}'</h3>
-            <ProfileStatus userStatus={props.userStatus}
+            <ProfileStatusWithHooks userStatus={props.userStatus}
                            updateUserStatus={props.updateUserStatus}/>
             <div className='d-flex'>
                 <div className='m-3'>

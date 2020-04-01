@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import "./App.css";
-import NavBar from "./Components/Navbar/Navbar";
 import Avatar from "./Components/Profile/Avatar/Avatar";
 import Music from "./Components/Music/Music";
 import {Route, Switch} from "react-router-dom";
@@ -14,7 +13,7 @@ import Login from "./Components/Login/Login";
 import {connect} from "react-redux";
 import {initializeApp} from "./redux/reducers/app-reducer";
 import PreLoader from "./Components/common/PreLoader/PreLoader";
-
+import NavBarContainer from "./Components/Navbar/NavbarContainer"
 
 class App extends Component {
     componentDidMount() {
@@ -28,7 +27,7 @@ class App extends Component {
         return (
             <div className='App_wrapper'>
                 <HeaderContainer/>
-                <NavBar/>
+                <NavBarContainer/>
                 <Avatar/>
                 <div className='app_wrapper_content'>
                     <Switch>

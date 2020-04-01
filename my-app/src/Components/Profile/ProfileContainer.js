@@ -6,7 +6,7 @@ import {Route, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 
-class ProfileContainer extends React.Component {
+class ProfileContainer extends React.PureComponent {
     componentDidMount() {
         let userId = this.props.match.params.userId;
         if (!userId) {
@@ -15,7 +15,6 @@ class ProfileContainer extends React.Component {
         this.props.getUserProfileApi(userId);
         this.props.getUserStatus(userId)
     }
-
     render() {
         return (
             <>

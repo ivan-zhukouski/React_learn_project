@@ -1,7 +1,9 @@
 import React from "react";
 import PreLoader from "../../common/PreLoader/PreLoader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+window.props = [];
 const ProfileInfo = (props) => {
+    window.props.push(props);
     if(!props.userProfile){
         return <PreLoader/>
     }

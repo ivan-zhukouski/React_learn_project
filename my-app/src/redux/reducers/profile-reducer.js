@@ -4,11 +4,16 @@ import {isLoading} from "./users-reducer";
 const ADD_NEW_POST = 'ADD_NEW_POST';
 const SET_USER_PROFILE ='SET_USER_PROFILE';
 const SET_USER_STATUS='SET_USER_STATUS';
+const DELETE_POST = 'DELETE_POST';
 
 //actions
 export const addPostActionCreator = (newText)=> ( {
     type: ADD_NEW_POST, newText
 });
+export const deletePostAC = (postId)=> ( {
+    type: DELETE_POST, postId
+});
+
 export const setUserProfile = (profile)=>({
     type: SET_USER_PROFILE, profile
 });
@@ -79,6 +84,11 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userStatus: action.status
+            };
+        case DELETE_POST:
+            return {
+                ...state,
+                postsData: state.postsData.filter(p => p.id !== action.postId)
             };
         default:
             return state

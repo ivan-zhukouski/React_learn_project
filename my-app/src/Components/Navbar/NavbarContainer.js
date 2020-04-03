@@ -7,8 +7,7 @@ import {addPostActionCreator} from "../../redux/reducers/profile-reducer";
 
 let mapStateToProps = (state) => {
     return {
-        postsData: state.profileData.postsData,
-        newPostText: state.profileData.newPostText,
+        friendsData: state.friendsData.friendsData.friends,
     }
 };
 let mapDispatchToProps= (dispatch)=> {

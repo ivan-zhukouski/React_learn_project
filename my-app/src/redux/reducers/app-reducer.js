@@ -8,7 +8,7 @@ export const setInitialized = () => ({
 });
 //
 //thunk
-export const initializeApp = () => (dispatch)=>{
+export const initializeApp = () => (dispatch) => {
  const promise = dispatch(getMyProfile());
  Promise.all([promise]).then(()=>{
      dispatch(setInitialized())

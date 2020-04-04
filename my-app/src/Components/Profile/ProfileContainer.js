@@ -18,7 +18,7 @@ class ProfileContainer extends React.PureComponent {
     render() {
         return (
             <>
-                <Route path='/profile'
+                <Route path={`/profile`}
                        render={() => <Profile {...this.props}
                                               userStatus={this.props.userStatus}
                                               userProfile={this.props.userProfile}

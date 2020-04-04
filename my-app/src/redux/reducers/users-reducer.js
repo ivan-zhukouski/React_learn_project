@@ -7,11 +7,11 @@ const CURRENT_PAGE = 'CURRENT_PAGE';
 const PAGE_SIZE = 'PAGE_SIZE';
 const TOTAL_USERS_COUNT = 'TOTAL_USERS_COUNT';
 const LOADING = 'LOADING';
-const FOLLOWING_PROGRESS= 'FOLLOWING_PROGRESS';
+const FOLLOWING_PROGRESS = 'FOLLOWING_PROGRESS';
 
 
 //actions
-export const follow = (userId) => ( {
+export const follow = (userId) => ({
     type: FOLLOW,
     userId
 });
@@ -31,41 +31,37 @@ export const setTotalPage = (totalUsers) => ({
     type: TOTAL_USERS_COUNT,
     totalUsers
 });
-export const isLoading = (loading)=> ({
+export const isLoading = (loading) => ({
     type: LOADING,
     loading
 });
-export const isFollowing = (following, userId)=> ({
+export const isFollowing = (following, userId) => ({
     type: FOLLOWING_PROGRESS,
     following, userId
 });
 //
 //thunk
-export const getUsers =(currentPage, pageSize)=> {
-    return (dispatch)=>{
+export const getUsers = (currentPage, pageSize) => {
+    return async (dispatch) => {
         dispatch(isLoading(true));
-        userAPI.getUsers(currentPage, pageSize)
-            .then(data => {
-                dispatch(setUsers(data.items));
-                dispatch(setTotalPage(data.totalCount));
-                dispatch(isLoading(false))
-            });
+        const data = await userAPI.getUsers(currentPage, pageSize);
+        dispatch(setUsers(data.items));
+        dispatch(setTotalPage(data.totalCount));
+        dispatch(isLoading(false))
     }
 };
-export const removeUser = (userId)=>{
-    return (dispatch)=>{
+export const removeUser = (userId) => {
+    return async (dispatch) => {
         dispatch(isFollowing(true, userId));
-        userAPI.removeUser(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(remove(userId))
-                }
-                dispatch(isFollowing(false, userId));
-            });
+        const data = await userAPI.removeUser(userId)
+        if (data.resultCode === 0) {
+            dispatch(remove(userId))
+        }
+        dispatch(isFollowing(false, userId));
     }
 };
-export const followUser = (userId)=>{
-    return (dispatch)=>{
+export const followUser = (userId) => {
+    return (dispatch) => {
         dispatch(isFollowing(true, userId));
         userAPI.followUser(userId)
             .then(data => {
@@ -92,9 +88,9 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: state.users.map(user => {
-                    if(user.id === action.userId) {
+                    if (user.id === action.userId) {
                         return {
-                            ...user, followed:true
+                            ...user, followed: true
                         }
                     }
                     return user
@@ -105,7 +101,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: state.users.map(user => {
-                    if(user.id === action.userId){
+                    if (user.id === action.userId) {
                         return {
                             ...user, followed: false
                         }
@@ -114,36 +110,36 @@ const userReducer = (state = initialState, action) => {
                 })
             };
         case SET_USERS :
-            return{
+            return {
                 ...state,
                 users: [...action.users]
             };
         case CURRENT_PAGE :
-            return{
+            return {
                 ...state,
                 currentPage: action.currentPage
             };
         case PAGE_SIZE :
-            return{
+            return {
                 ...state,
-               pageSize: action.pageSize
+                pageSize: action.pageSize
             };
         case TOTAL_USERS_COUNT :
-            return{
+            return {
                 ...state,
                 totalUsersCount: action.totalUsers
             };
         case LOADING:
-            return{
+            return {
                 ...state,
                 isLoading: action.loading
             };
         case FOLLOWING_PROGRESS:
-            return{
+            return {
                 ...state,
                 isFollowingProgress: action.following
                     ? [...state.isFollowingProgress, action.userId]
-                    : state.isFollowingProgress.filter(id => id !== action.userId )
+                    : state.isFollowingProgress.filter(id => id !== action.userId)
             };
         default:
             return state

@@ -6,7 +6,7 @@ import {
     setTotalPage,getUsers, removeUser, followUser,
 } from "../../redux/reducers/users-reducer";
 import Users from "./Users";
-import {Route} from "react-router-dom";
+import {Route, withRouter} from "react-router-dom";
 import {setUserProfile} from "../../redux/reducers/profile-reducer";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
@@ -17,6 +17,7 @@ import {
     getUserProfile,
     getUsersData
 } from "../../redux/selectors/user-selectors";
+import UserProfileContainer from "./UserProfileContainer";
 
 class UsersContainer extends React.Component {
 
@@ -40,6 +41,8 @@ class UsersContainer extends React.Component {
                                             followUser={this.props.followUser}
                                             isFollowingProgress={this.props.isFollowingProgress}
                        />}/>
+                <Route exact path='/users/profile/:userId?'
+                       render={() => <UserProfileContainer/>}/>
             </>
         )
     }
@@ -67,7 +70,8 @@ const actions = {
 };
 export default compose(
     connect(mapStateToProps, actions),
-    withAuthRedirect
+    withAuthRedirect,
+    withRouter,
 )(UsersContainer)
 
 

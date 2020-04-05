@@ -8,7 +8,7 @@ const NavBar = (props) => {
             <div className={style.nav_links}>
                 <div className='d-flex flex-column'>
                     <div className={style.link}>
-                        <NavLink exact to='/profile' activeClassName={style.active} >Profile</NavLink>
+                        <NavLink exact to='/profile' activeClassName={style.active} >My Profile</NavLink>
                     </div>
                     <div className={style.link}>
                         <NavLink to='/users' activeClassName={style.active} >Users</NavLink>

@@ -2,7 +2,7 @@ import React from "react";
 import style from "./../Navbar.module.css"
 import Friend from "./Friend/Friend";
 const Friends = (props) => {
-    let friend = props.friendsData.map(f => <Friend name ={f.name}/> );
+    let friend = props.friendsData.map(f => <Friend key={f.id} name ={f.name}/> );
     return(
         <div>
             <h3>Friends</h3>

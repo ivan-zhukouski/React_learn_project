@@ -8,22 +8,18 @@ import {compose} from "redux";
 
 class ProfileContainer extends React.PureComponent {
     componentDidMount() {
-        let userId = this.props.match.params.userId;
-        if (!userId) {
-            userId = this.props.userId;
-        }
+        let userId = this.props.userId;
+
         this.props.getUserProfileApi(userId);
         this.props.getUserStatus(userId)
     }
     render() {
         return (
-            <>
-                <Route path={`/profile`}
-                       render={() => <Profile {...this.props}
+          <Profile {...this.props}
                                               userStatus={this.props.userStatus}
                                               userProfile={this.props.userProfile}
-                                              updateUserStatus={this.props.updateUserStatus} />}/>
-            </>
+                                              updateUserStatus={this.props.updateUserStatus} />
+
         )
     }
 }

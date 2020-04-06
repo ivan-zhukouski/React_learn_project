@@ -16,7 +16,7 @@ const Paginator = ({onPageChange, currentPage, totalUsersCount, pageSize, portio
     const rightPortionNumber = portionNumber * portionSize;
 
     return (
-        <div className='d-flex m-2' style={{maxWidth: '500px'}}>
+        <div className='d-flex m-2'>
             <div>
                 {portionNumber > 1 && <Button variant='contained' color="primary" onClick={() => {setPortionNumber(portionNumber - 1) }}>
                     <NavigateBeforeIcon/>
@@ -38,9 +38,12 @@ const Paginator = ({onPageChange, currentPage, totalUsersCount, pageSize, portio
                     )
                 })
             }
-            {portionCount > portionSize && <Button variant='contained' color="primary" onClick={()=> setPortionNumber(portionNumber + 1)}>
-                <NavigateNextIcon/>
-            </Button>}
+            <div>
+                {portionCount > portionSize && <Button variant='contained' color="primary" onClick={()=> setPortionNumber(portionNumber + 1)}>
+                    <NavigateNextIcon/>
+                </Button>}
+            </div>
+
         </div>
     )
 };

@@ -5,6 +5,7 @@ const ADD_NEW_POST = 'ADD_NEW_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS';
 const DELETE_POST = 'DELETE_POST';
+const SET_MY_PHOTO = 'SET_MY_PHOTO';
 
 //actions
 export const addPostActionCreator = (newText) => ({
@@ -19,6 +20,9 @@ export const setUserProfile = (profile) => ({
 });
 export const setUserStatus = (status) => ({
     type: SET_USER_STATUS, status
+});
+export const setMyPhoto = (photo) => ({
+    type: SET_MY_PHOTO, photo
 });
 //
 //thunk
@@ -44,6 +48,16 @@ export const updateUserStatus = (status) => {
         const response = await usersAPI.updateUserStatus(status);
         if (response.data.resultCode === 0) {
             dispatch(setUserStatus(status));
+            dispatch(isLoading(false))
+        }
+    }
+};
+export const updateMyPhoto = (photo) => {
+    return async (dispatch) => {
+        dispatch(isLoading(true));
+        const response = await usersAPI.setAvatar(photo);
+        if (response.data.resultCode === 0) {
+            dispatch(setMyPhoto(response.data.data.photos));
             dispatch(isLoading(false))
         }
     }
@@ -83,6 +97,11 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postsData: state.postsData.filter(p => p.id !== action.postId)
+            };
+        case SET_MY_PHOTO:
+            return {
+                ...state,
+                userProfile: {...state.userProfile, photos: action.photo}
             };
         default:
             return state

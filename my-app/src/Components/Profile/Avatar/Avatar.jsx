@@ -1,7 +1,7 @@
 import React from "react";
 import style from './Avatar.module.css'
 import {connect} from "react-redux";
-import ava_cat from "../../../assets/images/cat.jpg"
+import ava_cat from "../../../assets/images/user_item.png"
 import PreLoader from "../../common/PreLoader/PreLoader";
 
 const Avatar = (props) => {

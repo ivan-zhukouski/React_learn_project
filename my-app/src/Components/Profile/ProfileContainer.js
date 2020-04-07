@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfileApi, getUserStatus, updateUserStatus} from "../../redux/reducers/profile-reducer";
+import {getUserProfileApi, getUserStatus, updateMyPhoto, updateUserStatus} from "../../redux/reducers/profile-reducer";
 import {Route, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
@@ -13,12 +13,14 @@ class ProfileContainer extends React.PureComponent {
         this.props.getUserProfileApi(userId);
         this.props.getUserStatus(userId)
     }
+
     render() {
         return (
-          <Profile {...this.props}
-                                              userStatus={this.props.userStatus}
-                                              userProfile={this.props.userProfile}
-                                              updateUserStatus={this.props.updateUserStatus} />
+            <Profile {...this.props}
+                     userStatus={this.props.userStatus}
+                     userProfile={this.props.userProfile}
+                     updateUserStatus={this.props.updateUserStatus}
+                     updateMyPhoto={this.props.updateMyPhoto}/>
 
         )
     }
@@ -34,7 +36,8 @@ const mapStateToProps = (state) => {
 const actions = {
     getUserProfileApi,
     getUserStatus,
-    updateUserStatus
+    updateUserStatus,
+    updateMyPhoto,
 };
 export default compose(
     withAuthRedirect,

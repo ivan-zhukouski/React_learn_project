@@ -1,4 +1,4 @@
-import React, {Component, Suspense} from "react";
+import React, {Component} from "react";
 import "./App.css";
 import Avatar from "./Components/Profile/Avatar/Avatar";
 import Music from "./Components/Music/Music";

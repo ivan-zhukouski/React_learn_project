@@ -37,7 +37,14 @@ export const usersAPI = {
     },
     updateUserStatus(status){
         return instance.put(`profile/status`,{status:status})
-    }
+    },
+    setAvatar(photo){
+        const formData = new FormData();
+        formData.append('image', photo);
+        return instance.put(`profile/photo`, formData, {
+            header: {'Content-Type': 'multipart/form-data' }
+        })
+    },
 };
 
 export const authAPI = {

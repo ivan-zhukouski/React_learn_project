@@ -19,8 +19,7 @@ class ProfileContainer extends React.PureComponent {
             <Profile {...this.props}
                      userStatus={this.props.userStatus}
                      userProfile={this.props.userProfile}
-                     updateUserStatus={this.props.updateUserStatus}
-                     updateMyPhoto={this.props.updateMyPhoto}/>
+                     updateUserStatus={this.props.updateUserStatus}/>
 
         )
     }
@@ -37,7 +36,6 @@ const actions = {
     getUserProfileApi,
     getUserStatus,
     updateUserStatus,
-    updateMyPhoto,
 };
 export default compose(
     withAuthRedirect,

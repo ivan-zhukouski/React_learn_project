@@ -24,6 +24,13 @@ const LoginForm = (props) => {
                        component={Input}
                        validate={[required, maxLength15 ]} />
             </div>
+            {props.captchaImg && <div>
+                <img src={props.captchaImg} alt='captcha'/> <br/>
+                <Field name='captcha'
+                       type='text'
+                       component={Input}
+                       validate={[required]} />
+            </div>}
             {props.error
             &&
             <div className={`d-flex justify-content-center ${style.error}`}>
@@ -45,7 +52,7 @@ const LoginReduxForm = reduxForm({
 const Login = (props)=>{
     const onSubmit = (formData) => {
         console.log(formData);
-        props.login(formData.email, formData.password, formData.rememberMe)
+        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     };
     if(props.isAuth){
         return <Redirect to='/profile'/>
@@ -54,14 +61,15 @@ const Login = (props)=>{
         <div >
             <h3 className='text-center'>Login</h3>
             <div className='d-flex justify-content-center'>
-                <LoginReduxForm onSubmit={onSubmit}  />
+                <LoginReduxForm captchaImg={props.captchaImg} onSubmit={onSubmit}  />
             </div>
         </div>
     )
 };
 const mapStateToProps = (state) => {
     return{
-        isAuth: state.authData.isAuth
+        isAuth: state.authData.isAuth,
+        captchaImg: state.authData.captchaImg
     }
 };
 const actions ={

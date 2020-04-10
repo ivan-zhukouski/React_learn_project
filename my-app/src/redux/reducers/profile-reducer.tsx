@@ -8,42 +8,42 @@ const DELETE_POST = 'DELETE_POST';
 const SET_MY_PHOTO = 'SET_MY_PHOTO';
 
 //actions
-export const addPostActionCreator = (newText) => ({
+export const addPostActionCreator = (newText:string) => ({
     type: ADD_NEW_POST, newText
 });
-export const deletePostAC = (postId) => ({
+export const deletePostAC = (postId:number) => ({
     type: DELETE_POST, postId
 });
 
-export const setUserProfile = (profile) => ({
+export const setUserProfile = (profile:any) => ({
     type: SET_USER_PROFILE, profile
 });
-export const setUserStatus = (status) => ({
+export const setUserStatus = (status:string) => ({
     type: SET_USER_STATUS, status
 });
-export const setMyPhoto = (photo) => ({
+export const setMyPhoto = (photo:string) => ({
     type: SET_MY_PHOTO, photo
 });
 //
 //thunk
-export const getUserProfileApi = (userId) => {
-    return async (dispatch) => {
+export const getUserProfileApi = (userId:number) => {
+    return async (dispatch:any) => {
         dispatch(isLoading(true));
         const response = await usersAPI.getUserProfile(userId);
         dispatch(setUserProfile(response));
         dispatch(isLoading(false))
     }
 };
-export const getUserStatus = (userId) => {
-    return async (dispatch) => {
+export const getUserStatus = (userId:number) => {
+    return async (dispatch:any) => {
         dispatch(isLoading(true));
         const response = await usersAPI.getUsersStatus(userId);
         dispatch(setUserStatus(response.data));
         dispatch(isLoading(false))
     }
 };
-export const updateUserStatus = (status) => {
-    return async (dispatch) => {
+export const updateUserStatus = (status:string) => {
+    return async (dispatch:any) => {
         dispatch(isLoading(true));
         const response = await usersAPI.updateUserStatus(status);
         if (response.data.resultCode === 0) {
@@ -52,8 +52,8 @@ export const updateUserStatus = (status) => {
         }
     }
 };
-export const updateMyPhoto = (photo) => {
-    return async (dispatch) => {
+export const updateMyPhoto = (photo:string) => {
+    return async (dispatch:any) => {
         dispatch(isLoading(true));
         const response = await usersAPI.setAvatar(photo);
         if (response.data.resultCode === 0) {
@@ -63,7 +63,12 @@ export const updateMyPhoto = (photo) => {
     }
 };
 //
-const initialState = {
+type StateType = {
+    postsData: Array<any>
+    userProfile: null | object
+    userStatus: string
+}
+const initialState: StateType = {
     postsData: [
         {id: 1, post: 'Hi, How are you?? Are you kidding me??aha', likeCount: 24},
         {id: 2, post: 'Have you read my message??', likeCount: 27},
@@ -71,7 +76,7 @@ const initialState = {
     userProfile: null,
     userStatus: '',
 };
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (state = initialState, action:any) => {
     switch (action.type) {
         case ADD_NEW_POST:
             const newPost = {

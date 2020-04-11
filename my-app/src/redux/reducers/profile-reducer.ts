@@ -1,33 +1,48 @@
 import {usersAPI} from "../../API/api";
 import {isLoading} from "./users-reducer";
+import {PhotosType} from "../../types/types";
 
-const ADD_NEW_POST = 'ADD_NEW_POST';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_USER_STATUS = 'SET_USER_STATUS';
-const DELETE_POST = 'DELETE_POST';
-const SET_MY_PHOTO = 'SET_MY_PHOTO';
+const ADD_NEW_POST = '/PROFILE/ADD_NEW_POST';
+const SET_USER_PROFILE = '/PROFILE/SET_USER_PROFILE';
+const SET_USER_STATUS = '/PROFILE/SET_USER_STATUS';
+const DELETE_POST = '/PROFILE/DELETE_POST';
+const SET_MY_PHOTO = '/PROFILE/SET_MY_PHOTO';
 
 //actions
-export const addPostActionCreator = (newText:string) => ({
+type AddPostACType = {
+    type: typeof ADD_NEW_POST, newText: string
+}
+export const addPostActionCreator = (newText:string): AddPostACType => ({
     type: ADD_NEW_POST, newText
 });
-export const deletePostAC = (postId:number) => ({
+type DeletePostACType = {
+    type: typeof DELETE_POST, postId: number
+}
+export const deletePostAC = (postId:number): DeletePostACType => ({
     type: DELETE_POST, postId
 });
-
-export const setUserProfile = (profile:any) => ({
+type SetUserProfileType = {
+    type: typeof SET_USER_PROFILE, profile: UserProfileType
+}
+export const setUserProfile = (profile:UserProfileType):SetUserProfileType => ({
     type: SET_USER_PROFILE, profile
 });
-export const setUserStatus = (status:string) => ({
+type SetUserStatusType = {
+    type: typeof SET_USER_STATUS, status: string
+}
+export const setUserStatus = (status:string):SetUserStatusType => ({
     type: SET_USER_STATUS, status
 });
-export const setMyPhoto = (photo:string) => ({
-    type: SET_MY_PHOTO, photo
+type SetMyPhoto = {
+    type: typeof SET_MY_PHOTO, photos: PhotosType
+}
+export const setMyPhoto = (photos:PhotosType):SetMyPhoto => ({
+    type:SET_MY_PHOTO, photos
 });
 //
 //thunk
-export const getUserProfileApi = (userId:number) => {
-    return async (dispatch:any) => {
+export const getUserProfileApi = (userId: number) => {
+    return async (dispatch: any) => {
         dispatch(isLoading(true));
         const response = await usersAPI.getUserProfile(userId);
         dispatch(setUserProfile(response));
@@ -42,7 +57,7 @@ export const getUserStatus = (userId:number) => {
         dispatch(isLoading(false))
     }
 };
-export const updateUserStatus = (status:string) => {
+export const updateUserStatus = (status:any) => {
     return async (dispatch:any) => {
         dispatch(isLoading(true));
         const response = await usersAPI.updateUserStatus(status);
@@ -52,7 +67,7 @@ export const updateUserStatus = (status:string) => {
         }
     }
 };
-export const updateMyPhoto = (photo:string) => {
+export const updateMyPhoto = (photo:any) => {
     return async (dispatch:any) => {
         dispatch(isLoading(true));
         const response = await usersAPI.setAvatar(photo);
@@ -63,20 +78,40 @@ export const updateMyPhoto = (photo:string) => {
     }
 };
 //
-type StateType = {
-    postsData: Array<any>
-    userProfile: null | object
-    userStatus: string
+type PostDataType = {
+    id: number
+    post: string
+    likeCount: number
 }
-const initialState: StateType = {
+type ContactsType = {
+    github:string
+    vk:string
+    facebook:string
+    instagram:string
+    twitter:string
+    website:string
+    youtube:string
+    mainLink:string
+}
+
+type UserProfileType = {
+    userId:number
+    lookingForAJob:boolean
+    lookingForAJobDescription:string
+    fullName:string
+    contacts:ContactsType
+    photos: PhotosType
+}
+const initialState = {
     postsData: [
         {id: 1, post: 'Hi, How are you?? Are you kidding me??aha', likeCount: 24},
         {id: 2, post: 'Have you read my message??', likeCount: 27},
-    ],
-    userProfile: null,
+    ] as Array<PostDataType>,
+    userProfile: null as UserProfileType | null,
     userStatus: '',
 };
-const profileReducer = (state = initialState, action:any) => {
+type InitialStateType = typeof initialState
+const profileReducer = (state = initialState, action:any): InitialStateType => {
     switch (action.type) {
         case ADD_NEW_POST:
             const newPost = {
@@ -106,7 +141,7 @@ const profileReducer = (state = initialState, action:any) => {
         case SET_MY_PHOTO:
             return {
                 ...state,
-                userProfile: {...state.userProfile, photos: action.photo}
+                userProfile: {...state.userProfile, photos: action.photo} as UserProfileType
             };
         default:
             return state

@@ -1,22 +1,33 @@
 const ADD_NEW_DIALOG_TEXT = 'ADD_NEW_DIALOG_TEXT';
-
-export const addNewDialogTextActionCreator = (newDialog) => ({
-    type: ADD_NEW_DIALOG_TEXT,newDialog
+type AddNewDialogType = {
+    type: typeof ADD_NEW_DIALOG_TEXT
+    newDialog: string
+}
+export const addNewDialogTextActionCreator = (newDialog: string):AddNewDialogType => ({
+    type: ADD_NEW_DIALOG_TEXT, newDialog
 });
-
-const initialStore = {
+type DialogsDataType = {
+    name: string
+    id: number
+}
+type MessageDataType = {
+    message: string
+    id: number
+}
+const initialState = {
     dialogsData: [
         {name: 'Ivan', id: 1,},
         {name: 'Dimon', id: 2,},
         {name: 'Tema', id: 3,},
-    ],
+    ] as Array<DialogsDataType> ,
     messageData:[
         {message:'Yo, bro!!', id: 1},
         {message:'How are you??', id: 2},
         {message:'How are you??', id: 3},
-    ],
+    ] as Array<MessageDataType>,
 };
-const dialogsReducer = (state = initialStore, action) => {
+type InitialStateType = typeof initialState
+const dialogsReducer = (state = initialState, action:any):InitialStateType => {
     switch (action.type) {
         case ADD_NEW_DIALOG_TEXT:
             const newDialogText = {

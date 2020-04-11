@@ -1,6 +1,5 @@
-import profileReducer from "./reducers/profile-reducer.js";
+import profileReducer from "./reducers/profile-reducer";
 import dialogsReducer from "./reducers/dialogs-reducer";
-
 
 export const store = {
     _state: {

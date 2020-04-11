@@ -1,4 +1,5 @@
 import {usersAPI as userAPI} from "../../API/api";
+import {PhotosType} from "../../types/types";
 
 const FOLLOW = 'FOLLOW';
 const REMOVE = 'REMOVE';
@@ -11,38 +12,74 @@ const FOLLOWING_PROGRESS = 'FOLLOWING_PROGRESS';
 
 
 //actions
-export const follow = (userId) => ({
+type FollowType = {
+    type: typeof FOLLOW
+    userId: number
+}
+export const follow = (userId:number):FollowType => ({
     type: FOLLOW,
     userId
 });
-export const remove = (userId) => ({
+type RemoveType = {
+    type: typeof REMOVE
+    userId: number
+}
+export const remove = (userId: number): RemoveType => ({
     type: REMOVE,
     userId
 });
-export const setUsers = (users) => ({
+type UserType = {
+    id: number
+    name: string
+    status: string
+    followed: boolean
+    photos: PhotosType
+}
+type SetUsersType = {
+    type: typeof SET_USERS
+    users: Array<UserType>
+}
+export const setUsers = (users:Array<UserType>):SetUsersType => ({
     type: SET_USERS,
     users
 });
-export const changeCurrentPage = (currentPage) => ({
+type ChangeCurrentPageType = {
+    type: typeof CURRENT_PAGE
+    currentPage: number
+}
+export const changeCurrentPage = (currentPage:number):ChangeCurrentPageType => ({
     type: CURRENT_PAGE,
     currentPage
 });
-export const setTotalPage = (totalUsers) => ({
+type SetTotalPageType = {
+    type: typeof TOTAL_USERS_COUNT
+    totalUsers: number
+}
+export const setTotalPage = (totalUsers:number):SetTotalPageType => ({
     type: TOTAL_USERS_COUNT,
     totalUsers
 });
-export const isLoading = (loading) => ({
+type IsLoadingType = {
+    type: typeof LOADING
+    loading: boolean
+}
+export const isLoading = (loading:boolean):IsLoadingType => ({
     type: LOADING,
     loading
 });
-export const isFollowing = (following, userId) => ({
+type IsFollowingType = {
+    type: typeof FOLLOWING_PROGRESS
+    following: boolean
+    userId: number
+}
+export const isFollowing = (following: boolean, userId: number):IsFollowingType => ({
     type: FOLLOWING_PROGRESS,
     following, userId
 });
 //
 //thunk
-export const getUsers = (currentPage, pageSize) => {
-    return async (dispatch) => {
+export const getUsers = (currentPage:number, pageSize:number) => {
+    return async (dispatch:any) => {
         dispatch(isLoading(true));
         const data = await userAPI.getUsers(currentPage, pageSize);
         dispatch(setUsers(data.items));
@@ -50,21 +87,21 @@ export const getUsers = (currentPage, pageSize) => {
         dispatch(isLoading(false))
     }
 };
-export const removeUser = (userId) => {
-    return async (dispatch) => {
+export const removeUser = (userId:number) => {
+    return async (dispatch:any) => {
         dispatch(isFollowing(true, userId));
-        const data = await userAPI.removeUser(userId)
+        const data = await userAPI.removeUser(userId);
         if (data.resultCode === 0) {
             dispatch(remove(userId))
         }
         dispatch(isFollowing(false, userId));
     }
 };
-export const followUser = (userId) => {
-    return (dispatch) => {
+export const followUser = (userId:number) => {
+    return (dispatch:any) => {
         dispatch(isFollowing(true, userId));
         userAPI.followUser(userId)
-            .then(data => {
+            .then((data: { resultCode: number; }) => {
                 if (data.resultCode === 0) {
                     dispatch(follow(userId))
                 }
@@ -74,15 +111,15 @@ export const followUser = (userId) => {
 };
 //
 const initialState = {
-    users: [],
-    currentPage: 1,
-    pageSize: 5,
-    totalUsersCount: null,
-    isLoading: null,
-    userProfileID: 2,
-    isFollowingProgress: [],
+    users: [] as Array<UserType>,
+    currentPage: 1 as number,
+    pageSize: 5 as number,
+    totalUsersCount: null as number | null,
+    isLoading: null as boolean | null,
+    isFollowingProgress: [] as Array<number>, // array of users ids
 };
-const userReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState
+const userReducer = (state = initialState, action:any):InitialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -95,7 +132,6 @@ const userReducer = (state = initialState, action) => {
                     }
                     return user
                 })
-
             };
         case REMOVE:
             return {

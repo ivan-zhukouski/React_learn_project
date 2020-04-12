@@ -3,28 +3,32 @@ import style from './Header.module.css'
 import {connect} from "react-redux";
 import {logout} from "../../redux/reducers/auth-reducer";
 
-class Header extends React.Component {
-    handleLogout = () => {
-        this.props.logout()
+type HeaderType = {
+    logout: any
+    isLoading: boolean
+    message: string
+    isAuth: boolean
+}
+const Header = (props: HeaderType)=> {
+     const handleLogout = () => {
+        props.logout()
     };
-    render() {
         return (
             <div className={style.main_header}>
                 <header className='d-flex justify-content-between'>
                     <div>
-                        <img className={this.props.isLoading ? 'App-logo' : ''} style={{width: '70px', height: '70px'}}
+                        <img className={props.isLoading ? 'App-logo' : ''} style={{width: '70px', height: '70px'}}
                              src='https://logosolusa.com/wp-content/uploads/parser/Will-Logo-1.png' alt='logo'/>
                     </div>
                     <div className='d-flex align-items-center m-3'>
-                        <h3>{this.props.message}</h3>
+                        <h3>{props.message}</h3>
                     </div>
-                    {this.props.isAuth && <button onClick={this.handleLogout} className='m-3'>Logout</button>}
+                    {props.isAuth && <button onClick={handleLogout} className='m-3'>Logout</button>}
                 </header>
             </div>
         )
-    }
-}
-const mapStateToProps = (state) => {
+};
+const mapStateToProps = (state:any) => {
     return{
         isAuth:state.authData.isAuth
     }

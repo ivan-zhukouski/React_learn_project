@@ -26,10 +26,10 @@ const User = ({user, ...props}) => {
                 </div>
                 <div>
                     <div>
-                        u.location.city
+                        {user.id}
                     </div>
                     <div>
-                        u.location.country
+
                     </div>
                 </div>
             </div>

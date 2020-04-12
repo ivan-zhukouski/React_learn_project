@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import style from "./Dialogs.module.css"
 import Message from "./Messages/Messages";
 import DialogItem from "./DialogItems/DialogItems";
@@ -6,14 +6,20 @@ import {Route} from "react-router-dom";
 import {Field, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../FormControls/validators/validators";
 import {TextArea} from "../../FormControls/RenderFormPart";
+import {DialogsDataType, MessageDataType} from "../../redux/reducers/dialogs-reducer";
 
-const Dialogs = (props) => {
+type PropsType = {
+    dialogsData: Array<DialogsDataType>
+    messageData: Array<MessageDataType>
+    addDialogText: (newDialog: string)=>void
+}
+
+const Dialogs:FC<PropsType> = (props) => {
     const dialogColumn = props.dialogsData.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>);
     const messageFriend = props.messageData.map(m => <Message key={m.id} message={m.message}/>);
     const messageMe = props.messageData.map(m => <Message key={m.id} message={m.message}/>);
 
-    const onSubmit = (newDialog) => {
-        console.log(newDialog);
+    const onSubmit = (newDialog:any) => {
         props.addDialogText(newDialog.newDialog)
     };
     return (
@@ -38,9 +44,8 @@ const Dialogs = (props) => {
         </div>
     )
 };
-
 const maxLength10 = maxLengthCreator(10);
-const DialogField = (props) => {
+const DialogField= (props:any) => {
     return(
         <form onSubmit={props.handleSubmit}>
             <div className='d-flex justify-content-center'>

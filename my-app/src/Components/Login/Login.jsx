@@ -1,4 +1,4 @@
-import React from "react";
+import React,{FC} from "react";
 import {Field, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import {login} from "../../redux/reducers/auth-reducer";
@@ -6,8 +6,22 @@ import {Input} from "../../FormControls/RenderFormPart";
 import {maxLengthCreator, required} from "../../FormControls/validators/validators";
 import {Redirect} from "react-router-dom";
 import style from "./../../FormControls/FormControls.module.css"
+import {AppStateType} from "../../redux/redux-store";
+
+/*
+type MapStateToPropsType = {
+    isAuth:boolean
+    captchaImg:string
+}
+type GetPropsFromParent = {
+    handleSubmit: ()=> void
+    captchaImg: string
+    error: string
+}
+*/
 
 const maxLength15 = maxLengthCreator(15);
+
 const LoginForm = (props) => {
     return(
         <form onSubmit={props.handleSubmit}>
@@ -49,16 +63,22 @@ const LoginReduxForm = reduxForm({
     form: 'login'
 })(LoginForm);
 
+/*
+type LoginType = {
+    formData: object
+    captchaImg:string
+}
+*/
+
 const Login = (props)=>{
     const onSubmit = (formData) => {
-        console.log(formData);
         props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     };
     if(props.isAuth){
         return <Redirect to='/profile'/>
     }
     return(
-        <div >
+        <div>
             <h3 className='text-center'>Login</h3>
             <div className='d-flex justify-content-center'>
                 <LoginReduxForm captchaImg={props.captchaImg} onSubmit={onSubmit}  />
@@ -66,13 +86,16 @@ const Login = (props)=>{
         </div>
     )
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = (state/*: AppStateType*/) => {
     return{
         isAuth: state.authData.isAuth,
         captchaImg: state.authData.captchaImg
     }
 };
-const actions ={
+/*type ActionType = {
+    login/!*: ()=>void*!/
+}*/
+const actions = {
     login
 };
 export default connect(mapStateToProps,actions)(Login)

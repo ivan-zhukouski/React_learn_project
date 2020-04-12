@@ -1,18 +1,18 @@
-import React from "react";
 import {addNewDialogTextActionCreator} from "../../redux/reducers/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
+import { AppStateType } from "../../redux/redux-store";
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state:AppStateType) => {
     return {
         dialogsData: state.dialogData.dialogsData,
         messageData: state.dialogData.messageData,
         dialogData: state.dialogData
     }
 };
-let mapDispatchToProps = (dispatch) => {
+let mapDispatchToProps = (dispatch:any) => {
     return {
-        addDialogText: (newDialog) => {
+        addDialogText: (newDialog:string) => {
             dispatch(addNewDialogTextActionCreator(newDialog))
         },
     }

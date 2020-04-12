@@ -1,10 +1,16 @@
-import React from "react";
+import React, {FC} from "react";
 import style from './Avatar.module.css'
 import {connect} from "react-redux";
 import ava_cat from "../../../assets/images/user_item.png"
 import PreLoader from "../../common/PreLoader/PreLoader";
+import {UserProfileType} from "../../../redux/reducers/profile-reducer";
+import {AppStateType} from "../../../redux/redux-store";
 
-const Avatar = (props) => {
+type PropsType = {
+    userProfile?: UserProfileType | null
+}
+
+const Avatar:FC<PropsType> = (props) => {
     if(!props.userProfile){
         return <PreLoader/>
     }
@@ -17,7 +23,7 @@ const Avatar = (props) => {
         </div>
     )
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = (state:AppStateType) => {
     return {
         userProfile: state.profileData.userProfile
     }

@@ -1,8 +1,12 @@
-import React from "react";
+import React, {FC} from "react";
 import style from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
 import Friends from "./Friends/Friends";
-const NavBar = (props) => {
+import {FriendsType} from "../../redux/reducers/friends-reducer";
+type PropsType = {
+    friendsData: Array<FriendsType>
+}
+const NavBar: FC<PropsType> = (props) => {
     return (
         <nav className={style.nav_bar}>
             <div className={style.nav_links}>

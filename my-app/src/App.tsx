@@ -4,7 +4,6 @@ import Avatar from "./Components/Profile/Avatar/Avatar";
 import Music from "./Components/Music/Music";
 import {Redirect, Route, Switch} from "react-router-dom";
 import News from "./Components/News/News";
-import Settings from "./Components/Settings/Settings";
 import UsersContainer from "./Components/Users/UsersContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
@@ -15,11 +14,16 @@ import {initializeApp} from "./redux/reducers/app-reducer";
 import PreLoader from "./Components/common/PreLoader/PreLoader";
 import NavBarContainer from "./Components/Navbar/NavbarContainer"
 import {withSuspense} from "./HOC/withSuspenseLoad";
+import {AppStateType} from "./redux/redux-store";
 
 const DialogsContainer = React.lazy(()=> import('./Components/Dialogs/DialogsContainer'));
 
-class App extends Component {
-    componentDidMount() {
+interface InterfaceProps {
+    initializeApp: any
+    initialize: any
+}
+class App extends Component<InterfaceProps> {
+        componentDidMount(){
         this.props.initializeApp()
     }
 
@@ -27,6 +31,7 @@ class App extends Component {
         if(!this.props.initialize){
             return <PreLoader/>
         }
+
         return (
             <div className='App_wrapper'>
                 <HeaderContainer/>
@@ -52,8 +57,7 @@ class App extends Component {
         );
     }
 }
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         initialize: state.appData.initialized
     }

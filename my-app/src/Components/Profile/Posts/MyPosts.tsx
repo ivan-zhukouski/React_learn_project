@@ -1,11 +1,16 @@
-import React from "react";
+import React, { FC } from "react";
 import style from "./MyPosts.module.css"
 import Post from "./Post/Post.jsx"
 import {Field, reduxForm} from "redux-form";
-const MyPosts = (props) => {
+import { PostDataType } from "../../../redux/reducers/profile-reducer";
+type PropsType = {
+    postsData: Array<PostDataType>
+    addNewPost: (postData:any)=>void
+}
+const MyPosts:FC<PropsType> = (props) => {
     const post = props.postsData.map( p => <Post key={p.id} message={p.post} likeCount = {p.likeCount} /> );
 
-    const onSubmit = (postData) => {
+    const onSubmit = (postData:any) => {
         console.log(postData);
         props.addNewPost(postData.newPost);
     };
@@ -20,7 +25,7 @@ const MyPosts = (props) => {
 
     )
 };
-const PostField = (props) => {
+const PostField = (props:any) => {
     return(
         <form onSubmit={props.handleSubmit}>
             <Field name={'newPost'} component={'input'} type={'text'} />

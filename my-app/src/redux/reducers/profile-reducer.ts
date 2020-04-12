@@ -78,7 +78,7 @@ export const updateMyPhoto = (photo:any) => {
     }
 };
 //
-type PostDataType = {
+export type PostDataType = {
     id: number
     post: string
     likeCount: number
@@ -94,7 +94,7 @@ type ContactsType = {
     mainLink:string
 }
 
-type UserProfileType = {
+export type UserProfileType = {
     userId:number
     lookingForAJob:boolean
     lookingForAJobDescription:string

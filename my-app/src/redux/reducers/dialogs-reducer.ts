@@ -6,11 +6,11 @@ type AddNewDialogType = {
 export const addNewDialogTextActionCreator = (newDialog: string):AddNewDialogType => ({
     type: ADD_NEW_DIALOG_TEXT, newDialog
 });
-type DialogsDataType = {
+export type DialogsDataType = {
     name: string
     id: number
 }
-type MessageDataType = {
+export type MessageDataType = {
     message: string
     id: number
 }

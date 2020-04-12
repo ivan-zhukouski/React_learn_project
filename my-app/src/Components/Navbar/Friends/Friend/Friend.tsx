@@ -1,7 +1,10 @@
-import React from "react";
+import React, {FC} from "react";
 import style from "../../Navbar.module.css";
 
-const Friend = (props) => {
+type PropsType = {
+    name:string
+}
+const Friend:FC<PropsType> = (props) => {
     return(
         <div className={style.friend_item}>
             <div>

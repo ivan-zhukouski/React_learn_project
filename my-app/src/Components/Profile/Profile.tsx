@@ -1,15 +1,20 @@
-import React from "react";
+import React, { FC } from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./Posts/MyPostsContainer";
-
-const Profile = props => {
+import {UserProfileType} from "../../redux/reducers/profile-reducer";
+type PropsType = {
+    userStatus:string
+    userProfile: UserProfileType
+    updateUserStatus: (userStatus:string)=> void
+}
+const Profile:FC<PropsType> = props => {
     return (
         <div>
             <ProfileInfo
                 userStatus={props.userStatus}
                 userProfile={props.userProfile}
                 updateUserStatus={props.updateUserStatus}
-                updateMyPhoto={props.updateMyPhoto}/>
+                />
             <MyPostsContainer/>
         </div>
     )

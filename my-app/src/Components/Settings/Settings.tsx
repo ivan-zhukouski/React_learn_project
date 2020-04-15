@@ -1,7 +1,9 @@
-import React from 'react';
-
-const Settings = (props) => {
-    const setAvatar = (e)=> {
+import React, {FC} from 'react';
+type PropsType = {
+    updateMyPhoto:(any:any)=>void
+}
+const Settings:FC<PropsType> = (props) => {
+    const setAvatar = (e:any)=> {
         if(e.target.files.length){
             props.updateMyPhoto(e.target.files[0])
         }

@@ -28,7 +28,7 @@ export const remove = (userId: number): RemoveType => ({
     type: REMOVE,
     userId
 });
-type UserType = {
+export type UserType = {
     id: number
     name: string
     status: string

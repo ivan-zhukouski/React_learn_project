@@ -46,7 +46,7 @@ class App extends Component<InterfaceProps> {
                         <Route path='/dialogs'
                                render={ withSuspense(DialogsContainer) }/>
                         <Route path='/users'
-                               render={() => <UsersContainer/>}/>
+                               render={() => <UsersContainer title={'Title'}/>}/>
                         <Route path='/music' component={Music}/>
                         <Route path='/news' component={News}/>
                         <Route path='/settings' render={()=> <SettingsContainer/>}/>

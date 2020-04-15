@@ -1,8 +1,15 @@
-import React from "react";
+import React, {FC} from "react";
 import PreLoader from "../../common/PreLoader/PreLoader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import {UserProfileType} from "../../../redux/reducers/profile-reducer";
 
-const ProfileInfo = (props) => {
+type PropsType = {
+    userProfile: UserProfileType
+    userStatus:string
+    updateUserStatus: (userStatus:string)=> void
+}
+
+const ProfileInfo:FC<PropsType> = (props) => {
     if(!props.userProfile){
         return <PreLoader/>
     }

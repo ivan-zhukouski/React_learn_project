@@ -3,11 +3,11 @@ import {connect} from "react-redux";
 import {
     changeCurrentPage,
     setUsers,
-    setTotalPage,getUsers, removeUser, followUser,
+    setTotalPage,getUsers, removeUser, followUser, UserType,
 } from "../../redux/reducers/users-reducer";
 import Users from "./Users";
 import {Route, withRouter} from "react-router-dom";
-import {setUserProfile} from "../../redux/reducers/profile-reducer";
+import {setUserProfile, UserProfileType} from "../../redux/reducers/profile-reducer";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 import {
@@ -18,13 +18,32 @@ import {
     getUsersData
 } from "../../redux/selectors/user-selectors";
 import UserProfileContainer from "./UserProfileContainer";
+import {AppStateType} from "../../redux/redux-store";
 
-class UsersContainer extends React.Component {
+type OwnPropsType = {
+    title:string
+}
+type MapStatePropsType = {
+    currentPage:number
+    pageSize:number
+    isFollowingProgress:boolean
+    totalUsersCount:number
+    usersData: Array<UserType>
+    userProfile: Array<UserProfileType>
+}
+type MapDispatchPropsType = {
+    getUsers: (currentPage:number,pageSize:number)=>void
+    changeCurrentPage:(page:number)=>void
+    removeUser:(userId:number)=>void
+    followUser:(userId:number)=>void
+}
+type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
+class UsersContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         this.props.getUsers(this.props.currentPage,this.props.pageSize);
     }
-    onPageChange = (page) => {
+    onPageChange = (page:number) => {
         this.props.changeCurrentPage(page);
         this.props.getUsers(page, this.props.pageSize);
     };
@@ -48,7 +67,7 @@ class UsersContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state:AppStateType) => {
     return {
         usersData: getUsersData(state),
         currentPage: getCurrentPage(state),
@@ -59,17 +78,20 @@ const mapStateToProps = (state) => {
     }
 };
 const actions = {
-    setUsers,
     changeCurrentPage,
-    setTotalPage,
-    setUserProfile,
     getUsers,
     removeUser,
     followUser,
 
 };
 export default compose(
-    connect(mapStateToProps, actions),
+    connect<MapStatePropsType, MapDispatchPropsType,OwnPropsType,AppStateType>(mapStateToProps, {
+        changeCurrentPage,
+        getUsers,
+        removeUser,
+        followUser,
+
+    }),
     withAuthRedirect,
     withRouter,
 )(UsersContainer)

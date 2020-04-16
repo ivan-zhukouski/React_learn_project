@@ -19,7 +19,7 @@ import {
 } from "../../redux/selectors/user-selectors";
 import UserProfileContainer from "./UserProfileContainer";
 import {AppStateType} from "../../redux/redux-store";
-
+/*
 type OwnPropsType = {
     title:string
 }
@@ -36,14 +36,14 @@ type MapDispatchPropsType = {
     changeCurrentPage:(page:number)=>void
     removeUser:(userId:number)=>void
     followUser:(userId:number)=>void
-}
-type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
-class UsersContainer extends React.Component<PropsType> {
+}*/
+/*type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType*/
+class UsersContainer extends React.Component/*<PropsType>*/ {
 
     componentDidMount() {
         this.props.getUsers(this.props.currentPage,this.props.pageSize);
     }
-    onPageChange = (page:number) => {
+    onPageChange = (page/*:number*/) => {
         this.props.changeCurrentPage(page);
         this.props.getUsers(page, this.props.pageSize);
     };
@@ -67,7 +67,7 @@ class UsersContainer extends React.Component<PropsType> {
     }
 }
 
-const mapStateToProps = (state:AppStateType) => {
+const mapStateToProps = (state/*:AppStateType*/) => {
     return {
         usersData: getUsersData(state),
         currentPage: getCurrentPage(state),
@@ -85,7 +85,7 @@ const actions = {
 
 };
 export default compose(
-    connect<MapStatePropsType, MapDispatchPropsType,OwnPropsType,AppStateType>(mapStateToProps, {
+    connect/*<MapStatePropsType, MapDispatchPropsType,OwnPropsType,AppStateType>*/(mapStateToProps, {
         changeCurrentPage,
         getUsers,
         removeUser,

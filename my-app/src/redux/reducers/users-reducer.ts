@@ -1,11 +1,13 @@
 import {usersAPI as userAPI} from "../../API/api";
 import {PhotosType} from "../../types/types";
+import {Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../redux-store";
 
 const FOLLOW = 'FOLLOW';
 const REMOVE = 'REMOVE';
 const SET_USERS = 'SET_USERS';
 const CURRENT_PAGE = 'CURRENT_PAGE';
-const PAGE_SIZE = 'PAGE_SIZE';
 const TOTAL_USERS_COUNT = 'TOTAL_USERS_COUNT';
 const LOADING = 'LOADING';
 const FOLLOWING_PROGRESS = 'FOLLOWING_PROGRESS';
@@ -16,7 +18,7 @@ type FollowType = {
     type: typeof FOLLOW
     userId: number
 }
-export const follow = (userId:number):FollowType => ({
+export const follow = (userId: number): FollowType => ({
     type: FOLLOW,
     userId
 });
@@ -28,18 +30,11 @@ export const remove = (userId: number): RemoveType => ({
     type: REMOVE,
     userId
 });
-export type UserType = {
-    id: number
-    name: string
-    status: string
-    followed: boolean
-    photos: PhotosType
-}
 type SetUsersType = {
     type: typeof SET_USERS
     users: Array<UserType>
 }
-export const setUsers = (users:Array<UserType>):SetUsersType => ({
+export const setUsers = (users: Array<UserType>): SetUsersType => ({
     type: SET_USERS,
     users
 });
@@ -47,7 +42,7 @@ type ChangeCurrentPageType = {
     type: typeof CURRENT_PAGE
     currentPage: number
 }
-export const changeCurrentPage = (currentPage:number):ChangeCurrentPageType => ({
+export const changeCurrentPage = (currentPage: number): ChangeCurrentPageType => ({
     type: CURRENT_PAGE,
     currentPage
 });
@@ -55,7 +50,7 @@ type SetTotalPageType = {
     type: typeof TOTAL_USERS_COUNT
     totalUsers: number
 }
-export const setTotalPage = (totalUsers:number):SetTotalPageType => ({
+export const setTotalPage = (totalUsers: number): SetTotalPageType => ({
     type: TOTAL_USERS_COUNT,
     totalUsers
 });
@@ -63,7 +58,7 @@ type IsLoadingType = {
     type: typeof LOADING
     loading: boolean
 }
-export const isLoading = (loading:boolean):IsLoadingType => ({
+export const isLoading = (loading: boolean): IsLoadingType => ({
     type: LOADING,
     loading
 });
@@ -72,14 +67,28 @@ type IsFollowingType = {
     following: boolean
     userId: number
 }
-export const isFollowing = (following: boolean, userId: number):IsFollowingType => ({
+export const isFollowing = (following: boolean, userId: number): IsFollowingType => ({
     type: FOLLOWING_PROGRESS,
     following, userId
 });
 //
+//types
+type ActionsTypes = IsFollowingType | IsLoadingType | SetTotalPageType
+    | ChangeCurrentPageType | SetUsersType | RemoveType | FollowType
+type DispatchType = Dispatch<ActionsTypes>
+
+export type UserType = {
+    id: number
+    name: string
+    status: string
+    followed: boolean
+    photos: PhotosType
+}
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+
 //thunk
-export const getUsers = (currentPage:number, pageSize:number) => {
-    return async (dispatch:any) => {
+export const getUsers = (currentPage: number, pageSize: number): ThunkType => {
+    return async (dispatch) => {
         dispatch(isLoading(true));
         const data = await userAPI.getUsers(currentPage, pageSize);
         dispatch(setUsers(data.items));
@@ -87,8 +96,8 @@ export const getUsers = (currentPage:number, pageSize:number) => {
         dispatch(isLoading(false))
     }
 };
-export const removeUser = (userId:number) => {
-    return async (dispatch:any) => {
+export const removeUser = (userId: number): ThunkType => {
+    return async (dispatch) => {
         dispatch(isFollowing(true, userId));
         const data = await userAPI.removeUser(userId);
         if (data.resultCode === 0) {
@@ -97,16 +106,14 @@ export const removeUser = (userId:number) => {
         dispatch(isFollowing(false, userId));
     }
 };
-export const followUser = (userId:number) => {
-    return (dispatch:any) => {
+export const followUser = (userId: number):ThunkType => {
+    return async (dispatch) => {
         dispatch(isFollowing(true, userId));
-        userAPI.followUser(userId)
-            .then((data: { resultCode: number; }) => {
-                if (data.resultCode === 0) {
-                    dispatch(follow(userId))
-                }
-                dispatch(isFollowing(false, userId));
-            });
+        let data = await userAPI.followUser(userId);
+        if (data.resultCode === 0) {
+            dispatch(follow(userId))
+        }
+        dispatch(isFollowing(false, userId));
     }
 };
 //
@@ -119,7 +126,7 @@ const initialState = {
     isFollowingProgress: [] as Array<number>, // array of users ids
 };
 type InitialStateType = typeof initialState
-const userReducer = (state = initialState, action:any):InitialStateType => {
+const userReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -154,11 +161,6 @@ const userReducer = (state = initialState, action:any):InitialStateType => {
             return {
                 ...state,
                 currentPage: action.currentPage
-            };
-        case PAGE_SIZE :
-            return {
-                ...state,
-                pageSize: action.pageSize
             };
         case TOTAL_USERS_COUNT :
             return {

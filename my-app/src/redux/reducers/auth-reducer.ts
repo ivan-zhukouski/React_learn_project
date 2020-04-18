@@ -1,10 +1,11 @@
 import {authAPI, securityApi} from "../../API/api";
-import {isLoading} from "./users-reducer";
+import {isLoading, IsLoadingType} from "./users-reducer";
 import {stopSubmit} from "redux-form";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../redux-store";
 
 const SET_AUTH_DATA = 'SET_AUTH_DATA';
 const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
-const SET_EMAIL = 'SET_EMAIL';
 const SET_CAPTCHA_IMG = 'SET_CAPTCHA_IMG';
 //actions
 type AuthDataType = {
@@ -34,10 +35,15 @@ type SetCaptchaImgType = {
 export const setCaptchaImg = (captcha:string):SetCaptchaImgType => ({
     type: SET_CAPTCHA_IMG, payload: captcha
 });
+
+type ActionsTypes = SetCaptchaImgType |
+    UpdateMessageType | SetAuthDataType | IsLoadingType
 //
 //thunk
-export const getMyProfile = () => {
-    return async (dispatch:any) => {
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+
+export const getMyProfile = ():ThunkType => {
+    return async (dispatch) => {
         let response = await authAPI.getMe();
         let {id, email, login} = response.data;
         if (!response.data.id) {
@@ -48,8 +54,8 @@ export const getMyProfile = () => {
         }
     }
 };
-export const login = (email:string, password:string, rememberMe:boolean, captcha:string) => {
-    return async (dispatch:any) => {
+export const login = (email:string, password:string, rememberMe:boolean, captcha:string):ThunkType => {
+    return async (dispatch) => {
         dispatch(isLoading(true));
         const response = await authAPI.login(email, password, rememberMe,captcha);
         if (response.data.resultCode === 0) {
@@ -60,12 +66,13 @@ export const login = (email:string, password:string, rememberMe:boolean, captcha
                 dispatch(getCaptchaImg());
             }
             const message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error';
+            // @ts-ignore
             dispatch(stopSubmit('login', {_error: message}));
         }
     }
 };
-export const logout = () => {
-    return async (dispatch:any) => {
+export const logout = ():ThunkType => {
+    return async (dispatch) => {
         dispatch(isLoading(true));
         const response = await authAPI.logout();
         if (response.data.resultCode === 0) {
@@ -76,8 +83,8 @@ export const logout = () => {
     }
 };
 
-const getCaptchaImg = () => {
-    return async (dispatch:any) => {
+const getCaptchaImg = ():ThunkType => {
+    return async (dispatch) => {
         let response = await securityApi.getCaptcha();
         dispatch(setCaptchaImg(response.data.url))
     }
@@ -94,7 +101,7 @@ const initialState = {
     captchaImg: null as string | null
 };
 type InitialStateType = typeof initialState
-const authReducer = (state = initialState, action: any): InitialStateType => {
+const authReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case SET_AUTH_DATA:
             return {
@@ -107,11 +114,6 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
                 message: action.message
             }
         }
-        case SET_EMAIL:
-            return {
-                ...state,
-                email: action.email
-            };
         case SET_CAPTCHA_IMG:
             return {
                 ...state,

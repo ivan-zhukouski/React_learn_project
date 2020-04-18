@@ -54,7 +54,7 @@ export const setTotalPage = (totalUsers: number): SetTotalPageType => ({
     type: TOTAL_USERS_COUNT,
     totalUsers
 });
-type IsLoadingType = {
+export type IsLoadingType = {
     type: typeof LOADING
     loading: boolean
 }
@@ -75,7 +75,7 @@ export const isFollowing = (following: boolean, userId: number): IsFollowingType
 //types
 type ActionsTypes = IsFollowingType | IsLoadingType | SetTotalPageType
     | ChangeCurrentPageType | SetUsersType | RemoveType | FollowType
-type DispatchType = Dispatch<ActionsTypes>
+//type DispatchType = Dispatch<ActionsTypes>
 
 export type UserType = {
     id: number

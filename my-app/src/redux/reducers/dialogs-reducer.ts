@@ -1,4 +1,5 @@
 const ADD_NEW_DIALOG_TEXT = 'ADD_NEW_DIALOG_TEXT';
+//actions
 type AddNewDialogType = {
     type: typeof ADD_NEW_DIALOG_TEXT
     newDialog: string
@@ -6,6 +7,8 @@ type AddNewDialogType = {
 export const addNewDialogTextActionCreator = (newDialog: string):AddNewDialogType => ({
     type: ADD_NEW_DIALOG_TEXT, newDialog
 });
+type ActionsTypes = AddNewDialogType
+
 export type DialogsDataType = {
     name: string
     id: number
@@ -14,6 +17,7 @@ export type MessageDataType = {
     message: string
     id: number
 }
+
 const initialState = {
     dialogsData: [
         {name: 'Ivan', id: 1,},
@@ -27,7 +31,7 @@ const initialState = {
     ] as Array<MessageDataType>,
 };
 type InitialStateType = typeof initialState
-const dialogsReducer = (state = initialState, action:any):InitialStateType => {
+const dialogsReducer = (state = initialState, action:ActionsTypes):InitialStateType => {
     switch (action.type) {
         case ADD_NEW_DIALOG_TEXT:
             const newDialogText = {

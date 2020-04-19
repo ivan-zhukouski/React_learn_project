@@ -1,6 +1,8 @@
 import {usersAPI} from "../../API/api";
-import {isLoading} from "./users-reducer";
+import {isLoading, IsLoadingType} from "./users-reducer";
 import {PhotosType} from "../../types/types";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../redux-store";
 
 const ADD_NEW_POST = '/PROFILE/ADD_NEW_POST';
 const SET_USER_PROFILE = '/PROFILE/SET_USER_PROFILE';
@@ -39,26 +41,29 @@ type SetMyPhoto = {
 export const setMyPhoto = (photos:PhotosType):SetMyPhoto => ({
     type:SET_MY_PHOTO, photos
 });
+type ActionsTypes = SetMyPhoto | SetUserStatusType | SetUserProfileType |
+    DeletePostACType | AddPostACType | IsLoadingType
 //
 //thunk
-export const getUserProfileApi = (userId: number) => {
-    return async (dispatch: any) => {
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+export const getUserProfileApi = (userId: number):ThunkType => {
+    return async (dispatch) => {
         dispatch(isLoading(true));
         const response = await usersAPI.getUserProfile(userId);
         dispatch(setUserProfile(response));
         dispatch(isLoading(false))
     }
 };
-export const getUserStatus = (userId:number) => {
-    return async (dispatch:any) => {
+export const getUserStatus = (userId:number):ThunkType => {
+    return async (dispatch) => {
         dispatch(isLoading(true));
         const response = await usersAPI.getUsersStatus(userId);
         dispatch(setUserStatus(response.data));
         dispatch(isLoading(false))
     }
 };
-export const updateUserStatus = (status:any) => {
-    return async (dispatch:any) => {
+export const updateUserStatus = (status:string):ThunkType => {
+    return async (dispatch) => {
         dispatch(isLoading(true));
         const response = await usersAPI.updateUserStatus(status);
         if (response.data.resultCode === 0) {
@@ -67,8 +72,8 @@ export const updateUserStatus = (status:any) => {
         }
     }
 };
-export const updateMyPhoto = (photo:any) => {
-    return async (dispatch:any) => {
+export const updateMyPhoto = (photo:string):ThunkType => {
+    return async (dispatch) => {
         dispatch(isLoading(true));
         const response = await usersAPI.setAvatar(photo);
         if (response.data.resultCode === 0) {
@@ -112,7 +117,7 @@ const initialState = {
     userStatus: '',
 };
 type InitialStateType = typeof initialState
-const profileReducer = (state = initialState, action:any): InitialStateType => {
+const profileReducer = (state = initialState, action:ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_NEW_POST:
             const newPost = {
@@ -142,7 +147,7 @@ const profileReducer = (state = initialState, action:any): InitialStateType => {
         case SET_MY_PHOTO:
             return {
                 ...state,
-                userProfile: {...state.userProfile, photos: action.photo} as UserProfileType
+                userProfile: {...state.userProfile, photos: action.photos} as UserProfileType
             };
         default:
             return state

@@ -59,11 +59,11 @@ export const login = (email:string, password:string, rememberMe:boolean, captcha
         dispatch(isLoading(true));
         const response = await authAPI.login(email, password, rememberMe,captcha);
         if (response.data.resultCode === 0) {
-            dispatch(getMyProfile());
+            await dispatch(getMyProfile());
             dispatch(isLoading(false));
         } else {
             if(response.data.resultCode === 10) {
-                dispatch(getCaptchaImg());
+                await dispatch(getCaptchaImg());
             }
             const message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error';
             // @ts-ignore

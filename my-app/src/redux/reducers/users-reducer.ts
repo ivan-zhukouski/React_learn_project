@@ -1,6 +1,5 @@
 import {usersAPI as userAPI} from "../../API/api";
 import {PhotosType} from "../../types/types";
-import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../redux-store";
 

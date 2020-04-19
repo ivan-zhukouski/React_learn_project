@@ -1,4 +1,4 @@
-import * as axios from "axios";
+import axios from "axios";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -8,53 +8,61 @@ const instance = axios.create({
     }
 });
 export const usersAPI = {
-    getUsers(currentPage, pageSize) {
+    getUsers(currentPage:number, pageSize:number) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response =>{
                 return response.data
             })
     },
-    followUser(id){
+    followUser(id:number){
         return instance.post(`follow/${id}`)
             .then(response =>{
                 return response.data
             })
     },
-    removeUser(id){
+    removeUser(id:number){
         return instance.delete(`follow/${id}`)
             .then(response =>{
                 return response.data
             })
     },
-    getUserProfile(userId){
+    getUserProfile(userId:number){
         return instance.get(`profile/${userId}`)
             .then(response=>{
                 return response.data
             })
     },
-    getUsersStatus(userId){
+    getUsersStatus(userId:number){
         return instance.get(`profile/status/${userId}`)
     },
-    updateUserStatus(status){
+    updateUserStatus(status:string){
         return instance.put(`profile/status`,{status:status})
     },
-    setAvatar(photo){
+    setAvatar(photo:any){
         const formData = new FormData();
         formData.append('image', photo);
         return instance.put(`profile/photo`, formData, {
-            header: {'Content-Type': 'multipart/form-data' }
+            headers: {'Content-Type': 'multipart/form-data' }
         })
     },
 };
-
+type MeDataType = {
+    data: {
+        id:number
+        email:string
+        login:string
+    }
+    resultCode:number
+    messages: Array<string>
+}
 export const authAPI = {
     getMe(){
-        return instance.get(`auth/me`)
+        return instance.get<MeDataType>(`auth/me`)
             .then(response => {
                 return response.data
             })
     },
-    login(email, password,rememberMe=false, captcha){
+    login(email:string, password:string,rememberMe=false, captcha: null | string = null){
         return instance.post(`auth/login`,{
             email: email,
             password: password,
